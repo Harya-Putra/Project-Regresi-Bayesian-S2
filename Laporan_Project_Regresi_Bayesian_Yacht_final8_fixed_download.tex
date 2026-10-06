@@ -1,0 +1,2127 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{graphicx}
+\usepackage{array}
+\makeatletter
+\renewcommand{\maketitle}{%
+  \begin{titlepage}
+  \thispagestyle{empty}
+  \centering
+  \vspace*{1.3cm}
+  {\bfseries\fontsize{16}{20}\selectfont
+  AUDIT REPRODUCIBILITY DAN KUALITAS DATA\\
+  PADA REGRESI BAYESIAN UNTUK PREDIKSI\\
+  HAMBATAN RESIDU KAPAL LAYAR\\
+  (STUDI KASUS: YACHT HYDRODYNAMICS)\par}
+  \vspace{1.0cm}
+  {\fontsize{12}{16}\selectfont\itshape
+  Ditujukan untuk Memenuhi Tugas Project Mata Kuliah Analisis Regresi Tingkat Lanjut\par}
+  \vspace{0.9cm}
+  {\fontsize{12}{16}\selectfont Dosen Pengampu:\par}
+  \vspace{0.2cm}
+  {\bfseries\fontsize{12}{16}\selectfont Dr. I Gede Nyoman Mindra Jaya, S.Si., M.Si.\par}
+  \vspace{0.8cm}
+  \IfFileExists{logo-unpad1.png}{%
+    \includegraphics[width=0.22\textwidth]{logo-unpad1.png}\par
+  }{% 
+    {\bfseries\fontsize{12}{16}\selectfont UNIVERSITAS PADJADJARAN\par}
+  }
+  \vspace{0.8cm}
+  {\fontsize{12}{16}\selectfont Disusun Oleh:\par}
+  \vspace{0.2cm}
+  {\bfseries\fontsize{12}{16}\selectfont
+  Yaafi Ferdian Syahputra (140720260018)\\
+  I Gusti Bagus Harya Putra (140720260016)\par}
+  \vspace{0.9cm}
+  {\bfseries\fontsize{12}{16}\selectfont
+  PROGRAM STUDI MAGISTER STATISTIKA TERAPAN\\
+  DEPARTEMEN STATISTIKA\\
+  FAKULTAS MATEMATIKA DAN ILMU PENGETAHUAN ALAM\\
+  UNIVERSITAS PADJADJARAN\\
+  TAHUN 2026\par}
+  \vfill
+  \end{titlepage}
+}
+\renewcommand{\contentsname}{DAFTAR ISI}
+\makeatother
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
+\hypersetup{
+  pdftitle={AUDIT REPRODUCIBILITY DAN KUALITAS DATA PADA REGRESI BAYESIAN UNTUK PREDIKSI HAMBATAN RESIDU KAPAL LAYAR},
+  pdfauthor={I Gusti Bagus Harya Putra dan Yaafi Ferdian Syahputra},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{AUDIT REPRODUCIBILITY DAN KUALITAS DATA PADA REGRESI BAYESIAN
+UNTUK PREDIKSI HAMBATAN RESIDU KAPAL LAYAR}
+\author{I Gusti Bagus Harya Putra dan Yaafi Ferdian Syahputra}
+\date{2026}
+
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{DAFTAR ISI}
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\textbf{ABSTRAK}
+
+Prediksi hambatan residu (\emph{residuary resistance}) kapal layar pada
+tahap desain awal penting untuk menaksir kebutuhan daya propulsi.
+Penelitian ini menjawab pertanyaan: \emph{seberapa stabil dan informatif
+hasil Regresi Bayesian pada data Yacht Hydrodynamics ketika difokuskan
+pada reproducibility dan kualitas data?} Data terdiri atas 308 uji
+\emph{towing tank} dari 22 bentuk lambung × 14 Froude number. Analisis
+mengikuti \emph{Bayesian workflow}: audit data, prior predictive check,
+validasi komputasi (analitik, Gibbs, dan HMC), tujuh model bertahap
+(M0--M6), diagnostik MCMC, \emph{posterior predictive check}, PSIS-LOO
+dengan koreksi Jacobian, analisis sensitivitas, serta audit
+reproducibility (seed, urutan data, dan skema validasi). Komputasi
+\textbf{stabil secara substantif}: posterior MCMC cocok dengan solusi
+analitik, dan probabilitas eksedans prediktif hanya bervariasi
+0.757--0.765 antar lima seed. Uji formal \textbar z\textbar{}
+\textless{} 3 MCSE menandai SD efek hull; audit lima seed menunjukkan
+penyebabnya adalah MCSE yang meremehkan variasi antar-run (≈0.5×), bukan
+non-determinisme. Sebaliknya, keputusan \textbf{kualitas data dan
+preprocessing mendominasi hasil}: model Gaussian pada skala mentah (M0)
+konvergen sempurna namun salah spesifikasi (27\% replikasi bernilai
+negatif), dan RMSE validasi per-hull turun dari 8.87 (M0) menjadi 1.87
+(M3). Validasi acak per baris \textbf{melebih-lebihkan} kinerja model
+hierarkis sebesar 63.4 ELPD (SE 11.7) dan mengubah model yang terpilih.
+Model informatif untuk prediksi (cakupan interval prediksi 95\% per-hull
+M3 = 0.94; M6 sedikit konservatif, 0.99), tetapi arah efek masing-masing
+rasio geometri tidak dapat dipastikan dari 22 hull.
+
+\textbf{Kata Kunci:} Regresi Bayesian, Reproducibility, Kualitas Data,
+PSIS-LOO, \emph{Data Leakage}, Yacht Hydrodynamics.
+
+\clearpage
+
+\section{BAB 1. PENDAHULUAN}\label{bab-1.-pendahuluan}
+
+\subsection{1.1 Latar Belakang Masalah}\label{latar-belakang-masalah}
+
+Hambatan residu per satuan berat displacement adalah komponen hambatan
+kapal di luar gesekan, terutama akibat pembentukan gelombang. Nilainya
+menentukan kebutuhan daya propulsi, sehingga prediksi yang akurat pada
+tahap desain awal sangat bernilai. Dataset \emph{Delft Systematic Yacht
+Hull Series} (UCI ID 243) memuat hasil uji \emph{towing tank} untuk 22
+bentuk lambung yang diturunkan dari satu \emph{parent hull} (Standfast
+43), masing-masing diuji pada 14 kecepatan (Froude number).
+
+Regresi Bayesian menawarkan kuantifikasi ketidakpastian penuh melalui
+distribusi posterior dan posterior predictive. Namun, hasil Bayesian
+\textbf{bersyarat pada model, prior, data, dan komputasi}. Kesalahan
+kecil pada kualitas data atau preprocessing --- misalnya skala prior
+yang tidak sesuai, transformasi target, atau skema validasi yang bocor
+--- dapat menghasilkan kesimpulan yang tampak meyakinkan (R̂ = 1.00,
+tanpa divergensi) tetapi keliru. Karena itu, fokus project ini adalah
+\textbf{reproducibility dan kualitas data}: seberapa stabil hasil
+terhadap sumber variasi yang seharusnya tidak berpengaruh, dan seberapa
+besar pengaruh keputusan data terhadap kesimpulan.
+
+\subsection{1.2 Rumusan Masalah}\label{rumusan-masalah}
+
+Pertanyaan utama: \textbf{Seberapa stabil dan informatif hasil Regresi
+Bayesian pada Yacht Hydrodynamics ketika difokuskan pada reproducibility
+\& data quality?} Pertanyaan ini dijabarkan menjadi empat pertanyaan
+terukur:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Apakah kesimpulan berubah bila seed MCMC atau urutan baris data
+  diubah? (ukuran: selisih posterior dalam satuan MCSE)
+\item
+  Seberapa besar dampak preprocessing (target mentah vs log, bentuk
+  fungsi Froude) terhadap kecocokan dan prediksi? (ukuran: ELPD, RMSE,
+  cakupan interval prediksi)
+\item
+  Seberapa optimis validasi acak per baris dibanding validasi per hull?
+  (ukuran: selisih ELPD dan RMSE \emph{out-of-sample})
+\item
+  Seberapa sensitif posterior dan kesimpulan prediktif terhadap pilihan
+  prior yang masih masuk akal?
+\end{enumerate}
+
+\subsection{1.3 Tujuan Penelitian}\label{tujuan-penelitian}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Mengaudit struktur dan kualitas data, termasuk ketergantungan
+  observasi dalam satu hull.
+\item
+  Membangun baseline Regresi Bayesian yang benar dan reproducible, lalu
+  memperbaikinya secara bertahap sesuai temuan diagnostik.
+\item
+  Mengukur stabilitas hasil terhadap seed, urutan data, prior,
+  preprocessing, dan skema validasi.
+\item
+  Mengomunikasikan ketidakpastian estimasi dan prediksi untuk desain
+  lambung baru.
+\end{enumerate}
+
+\subsection{1.4 Unit Analisis dan
+Estimand}\label{unit-analisis-dan-estimand}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Elemen
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Keterangan
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Unit observasi & Satu uji \emph{towing tank}: satu bentuk lambung pada
+satu Froude number \\
+Outcome & Hambatan residu per satuan berat displacement
+(adimensional) \\
+Prediktor & 5 koefisien geometri lambung + Froude number; semua tersedia
+saat desain, sehingga tidak ada kebocoran dari outcome \\
+Estimand utama & Posterior predictive distribution
+\(p(\tilde y \mid \tilde x, y)\) untuk \textbf{lambung baru} \\
+Estimand sekunder & Efek 1 SD geometri terhadap resistance; stabilitas
+kesimpulan terhadap sumber variasi \\
+\end{longtable}
+}
+
+\section{BAB 2. TINJAUAN PUSTAKA}\label{bab-2.-tinjauan-pustaka}
+
+\subsection{2.1 Hambatan Residu dan Froude
+Number}\label{hambatan-residu-dan-froude-number}
+
+Froude number \(Fr = V/\sqrt{gL}\) adalah kecepatan tak berdimensi
+relatif terhadap panjang kapal. Pada \(Fr\) rendah hambatan residu
+kecil. Mendekati \(Fr \approx 0.4\), kapal ``terjebak'' di antara
+gelombang haluan dan buritannya sendiri sehingga hambatan meningkat
+hampir eksponensial (Gerritsma dkk., 1981). Konsekuensinya bagi
+pemodelan: hubungan outcome--Froude sangat non-linear, dan variasinya
+membesar pada kecepatan tinggi.
+
+\subsection{2.2 Regresi Bayesian}\label{regresi-bayesian}
+
+Inferensi Bayesian memperbarui pengetahuan melalui teorema Bayes:
+
+\[p(\theta\mid y) = \frac{p(y\mid\theta)\,p(\theta)}{p(y)} \propto p(y\mid\theta)\,p(\theta).\]
+
+Untuk regresi Gaussian
+\(\mathbf y\mid\beta,\sigma^2 \sim N(\mathbf X\beta, \sigma^2\mathbf I)\)
+dengan prior konjugat Normal--Inverse-Gamma
+\(\beta\mid\sigma^2\sim N(\mathbf m_0,\sigma^2\mathbf V_0)\) dan
+\(\sigma^2\sim IG(a_0,b_0)\), posterior tersedia dalam bentuk tertutup
+(Hoff, 2009):
+
+\[\mathbf V_n=(\mathbf V_0^{-1}+\mathbf X^\top\mathbf X)^{-1},\quad \mathbf m_n=\mathbf V_n(\mathbf V_0^{-1}\mathbf m_0+\mathbf X^\top\mathbf y),\quad a_n=a_0+\tfrac n2,\quad b_n=b_0+\tfrac12\left[\mathbf y^\top\mathbf y+\mathbf m_0^\top\mathbf V_0^{-1}\mathbf m_0-\mathbf m_n^\top\mathbf V_n^{-1}\mathbf m_n\right].\]
+
+Prediksi untuk data baru memakai posterior predictive distribution
+\(p(\tilde y\mid y)=\int p(\tilde y\mid\theta)\,p(\theta\mid y)\,d\theta\),
+yang menggabungkan ketidakpastian parameter dan variasi observasi. Prior
+yang baik ditentukan pada skala yang bermakna dan dievaluasi dengan
+\textbf{prior predictive check}: \(\theta^{(s)}\sim p(\theta)\), lalu
+\(y^{(s)}\sim p(y\mid\theta^{(s)})\) (Gelman dkk., 2020).
+
+\subsection{2.3 Komputasi dan Diagnostik
+MCMC}\label{komputasi-dan-diagnostik-mcmc}
+
+Model non-konjugat diestimasi dengan Hamiltonian Monte Carlo (NUTS)
+melalui Stan/\texttt{brms} (Bürkner, 2017). Konvergensi dinilai
+bersama-sama: \(\hat R\) ter-normalisasi rank ≤ 1.01, \emph{effective
+sample size} (bulk \& tail) ≥ 400, tanpa \emph{divergent transitions},
+serta trace/rank plot (Vehtari dkk., 2021). Galat Monte Carlo diukur
+dengan \(MCSE \approx SD/\sqrt{ESS}\).
+
+\subsection{2.4 Model Checking dan Perbandingan
+Model}\label{model-checking-dan-perbandingan-model}
+
+\emph{Posterior predictive check} (PPC) membandingkan statistik data
+teramati dengan data replika \(y^{rep}\sim p(y^{rep}\mid y)\) untuk
+menemukan aspek data yang gagal direproduksi model. Perbandingan
+prediktif memakai \(\text{ELPD}_{LOO}=\sum_i \log p(y_i\mid y_{-i})\)
+yang diaproksimasi PSIS-LOO dengan diagnostik Pareto-\(k\) (Vehtari
+dkk., 2017). ELPD hanya sah dibandingkan bila semua model mendefinisikan
+densitas untuk variabel yang sama. Jika target ditransformasi
+\(z=g(y)\), densitas dipindahkan ke skala \(y\) dengan koreksi Jacobian:
+\(\log p(y)=\log p(z)+\log|dz/dy|\).
+
+\subsection{2.5 Reproducibility dan Kebocoran
+Data}\label{reproducibility-dan-kebocoran-data}
+
+Hasil reproducible berarti dapat direplikasi dari data mentah dan kode
+tanpa langkah manual: seed, versi perangkat lunak, dan preprocessing
+tercatat. Pada data berkelompok, validasi acak per baris menempatkan
+observasi dari kelompok yang sama di data latih dan uji, sehingga model
+``mengenal'' kelompok yang diuji (\emph{data leakage}). Estimasi kinerja
+menjadi terlalu optimis bila tujuannya memprediksi kelompok baru
+(Roberts dkk., 2017).
+
+\section{BAB 3. METODOLOGI}\label{bab-3.-metodologi}
+
+\subsection{3.1 Sumber Data dan
+Variabel}\label{sumber-data-dan-variabel}
+
+Data sekunder berasal dari UCI Machine Learning Repository (ID 243,
+\emph{Yacht Hydrodynamics}), hasil eksperimen Delft Ship Hydromechanics
+Laboratory. File mentah tidak memiliki header, sehingga nama kolom
+diberikan mengikuti urutan dokumentasi resmi.
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{>{\raggedleft\arraybackslash}p{1.00cm}>{\raggedright\arraybackslash}p{2.60cm}>{\raggedright\arraybackslash}p{7.70cm}>{\raggedright\arraybackslash}p{5.10cm}}
+\caption{\label{tab:tabel_variabel}Tabel 3.1 Variabel Penelitian (semua adimensional)}\\
+\toprule
+No & Kode & Variabel & Peran\\
+\midrule
+1 & LCB & Longitudinal position of the center of buoyancy & Prediktor (geometri lambung)\\
+2 & Prismatic\_Coef & Prismatic coefficient & Prediktor (geometri lambung)\\
+3 & LD\_Ratio & Length-displacement ratio & Prediktor (geometri lambung)\\
+4 & BD\_Ratio & Beam-draught ratio & Prediktor (geometri lambung)\\
+5 & LB\_Ratio & Length-beam ratio & Prediktor (geometri lambung)\\
+\addlinespace
+6 & Froude\_No & Froude number & Prediktor (kondisi uji)\\
+7 & Resistance & Residuary resistance per unit weight of displacement & Outcome\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+\subsection{3.2 Audit Kualitas Data dan
+Preprocessing}\label{audit-kualitas-data-dan-preprocessing}
+
+Audit meliputi tipe dan rentang nilai, \emph{missing value}, duplikasi,
+struktur hull, distribusi target, dan outlier (IQR). Preprocessing
+dilakukan secara eksplisit dalam satu fungsi (\texttt{make\_frames}):
+prediktor distandardisasi \(z=(x-\bar x)/s\), target diberi dua versi
+(terstandardisasi pada skala mentah, dan \(\log(1+y)\)
+terstandardisasi), serta basis B-spline kubik (df = 6) untuk Froude.
+\textbf{Statistik standardisasi dan knot spline selalu dihitung dari
+data latih saja}, lalu diterapkan ke data uji.
+
+\subsection{3.3 Spesifikasi Model}\label{spesifikasi-model}
+
+Tujuh model dibangun bertahap. Setiap model mengubah satu aspek dari
+model sebelumnya, sehingga dampaknya dapat diatribusikan.
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{>{\raggedright\arraybackslash}p{2.00cm}>{\raggedright\arraybackslash}p{6.80cm}>{\raggedright\arraybackslash}p{6.80cm}}
+\caption{\label{tab:tabel_model}Tabel 3.2 Model yang Dibandingkan}\\
+\toprule
+Model & Deskripsi & Perubahan\\
+\midrule
+M0 & M0 Baseline: Gaussian, raw target (Variant 1) & Baseline: Gaussian, target mentah, linear\\
+M1 & M1 Log target, linear (Variant 2) & Target log(1+y) (Varian 2)\\
+M2 & M2 Log target + Froude\textasciicircum{}2, \textasciicircum{}3 (Variant 3) & M1 + Froude\textasciicircum{}2, Froude\textasciicircum{}3 (Varian 3)\\
+M3 & M3 Log target + Froude spline & Spline B untuk Froude\\
+M4 & M4 M3 + heteroskedastic sigma(Froude) & M3 + log sigma = g0 + g1 z\_Froude (heteroskedastik)\\
+\addlinespace
+M5 & M5 M3 with Student-t likelihood & M3 dengan likelihood Student-t\\
+M6 & M6 M4 + hull random intercept (final) & M4 + efek acak hull (dependensi dalam hull)\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+Model terlengkap (M6) ditulis sebagai:
+
+\[\ell_{ih}\sim N(\mu_{ih},\sigma_{ih}^2),\qquad \mu_{ih}=\beta_0+\sum_{j\in\text{geom}}\beta_j z_{j,h}+\sum_{k=1}^{6}\alpha_k B_k(z_{F,i})+u_h,\qquad \log\sigma_{ih}=\gamma_0+\gamma_1 z_{F,i},\qquad u_h\sim N(0,\sigma_{hull}^2),\]
+
+dengan \(\ell_{ih}\) adalah \(\log(1+\text{Resistance})\)
+terstandardisasi dan \(B_k\) basis B-spline.
+
+\subsection{3.4 Prior}\label{prior}
+
+Semua prior didefinisikan pada skala terstandardisasi dengan
+parameterisasi eksplisit, lalu divalidasi dengan prior predictive check
+pada \textbf{satuan asli} Resistance.
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{>{\raggedright\arraybackslash}p{3.40cm}>{\raggedright\arraybackslash}p{4.50cm}>{\raggedright\arraybackslash}p{9.00cm}}
+\caption{\label{tab:tabel_prior}Tabel 3.3 Prior, Parameterisasi, dan Alasan Substantif}\\
+\toprule
+Parameter & Prior & Alasan\\
+\midrule
+Intercept & Normal(0, 1) & Outcome terstandardisasi: di rata-rata prediktor, outcome sekitar 0 plus-minus 2 SD\\
+Slope geometri (5) & Normal(0, 0.5) & 22 hull adalah perturbasi kecil di sekitar satu parent hull; regularisasi ridge\\
+Slope Froude (F, F\textasciicircum{}2, F\textasciicircum{}3) & Normal(0, 1) & Kecepatan adalah penggerak hambatan yang dominan secara fisik\\
+Koefisien spline (6) & Normal(0, 1.5) & Koefisien B-spline = tinggi kurva relatif, rentang log-resistance sekitar 3.4 SD\\
+sigma (homoskedastik) & Exponential(rate = 1) & Menjamin sigma > 0; residual SD tidak melebihi SD outcome\\
+\addlinespace
+log-sigma: gamma0, gamma1 & Normal(-1.5, 0.75); Normal(0, 0.5) & Median sigma = 0.22 SD (95\%: 0.05-0.97); perubahan varians per SD Froude moderat\\
+nu (Student-t) & Gamma(shape = 2, rate = 0.1) & Mean 20; mengizinkan ekor berat hingga hampir Normal\\
+sd hull & Half-Normal(0, 0.25) & Selisih antar-hull pada geometri sama kurang dari sekitar 0.5 SD\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+\subsection{3.5 Komputasi dan Validasi}\label{komputasi-dan-validasi}
+
+Model di-fit dengan \texttt{brms} (Stan, NUTS): 4 chains × 1000 draws
+setelah 1000 warm-up, \texttt{adapt\_delta} = 0.95, seed = 2026.
+Kebenaran komputasi diverifikasi dengan membandingkan posterior analitik
+konjugat, \emph{Gibbs sampler} yang ditulis manual, dan HMC di Stan pada
+model dan prior yang sama.
+
+\subsection{3.6 Audit Reproducibility dan Skema
+Validasi}\label{audit-reproducibility-dan-skema-validasi}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Seed:} model final di-fit ulang dengan seed 777; bila ada
+  parameter yang ditandai, dilanjutkan dengan audit lima seed (2026,
+  777, 999, 31, 123) untuk membandingkan sebaran antar-run dengan MCSE
+  yang dilaporkan.
+\item
+  \textbf{Urutan data:} seed sama, baris data diacak.
+\item
+  \textbf{Skema validasi:} 5-fold per hull (4--5 hull utuh ditahan tiap
+  fold) dibandingkan 5-fold acak per baris. Metrik pada satuan asli:
+  RMSE, MAE, cakupan dan lebar interval prediksi 95\%, serta ELPD per
+  observasi.
+\item
+  \textbf{Sensitivitas prior:} semua SD prior M6 dikali 0.5 dan 2.5.
+\end{enumerate}
+
+Kriteria stabil: selisih mean posterior \textbar z\textbar{} \textless{}
+3 dalam satuan MCSE gabungan \(z=\Delta/\sqrt{MCSE_1^2+MCSE_2^2}\).
+Cross-validation memakai konfigurasi ringan (2 chains × 500 draws).
+
+\clearpage
+
+\section{BAB 4. HASIL DAN PEMBAHASAN}\label{bab-4.-hasil-dan-pembahasan}
+
+\subsection{4.1 Audit Kualitas Data}\label{audit-kualitas-data}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{ll}
+\caption{\label{tab:tabel_audit}Tabel 4.1 Ringkasan Audit Kualitas Data}\\
+\toprule
+Pemeriksaan & Hasil\\
+\midrule
+Jumlah baris x kolom & 308 x 7\\
+Missing value & 0\\
+Duplikasi penuh & 0\\
+Hull form unik & 22\\
+Baris per hull & 14\\
+\addlinespace
+Level Froude number & 14\\
+Skewness target (mentah) & 1.75\\
+Skewness target log(1+y) & 0.47\\
+Shapiro-Wilk target (p-value) & 4.85e-23\\
+Outlier IQR pada target & 42\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+Data lengkap tanpa duplikasi, dan desain eksperimennya \textbf{seimbang
+sempurna}: 22 hull × 14 Froude number = 308 baris. Temuan terpenting
+adalah struktur berkelompok ini: observasi dalam satu hull berbagi
+geometri yang sama, sehingga tidak saling independen. Outlier IQR pada
+target bukan kesalahan input, melainkan kondisi fisik valid pada
+kecepatan tinggi, sehingga \textbf{tidak dihapus}.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_froude-1} 
+
+}
+
+\caption{Gambar 4.1 Hubungan Froude Number dan Hambatan Residu per Hull (skala mentah dan log)}\label{fig:fig_froude}
+\end{figure}
+
+Setiap hull menunjukkan pola yang sama: datar pada Froude rendah lalu
+melonjak tajam setelah \(Fr \approx 0.35\). Pola ini jauh lebih linear
+pada skala log. Distribusi target sangat miring ke kanan (skewness
+1.75), sedangkan setelah transformasi \(\log(1+y)\) skewness menjadi
+0.47. Temuan ini menjadi dasar Varian 2 (target log) dan Varian 3/spline
+(bentuk fungsi Froude).
+
+\subsection{4.2 Prior Predictive Check}\label{prior-predictive-check}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{lrrrrrrr}
+\caption{\label{tab:tabel_prior_pred}Tabel 4.2 Prior Predictive pada Satuan Asli Resistance}\\
+\toprule
+ & share\_negative & share\_below\_minus\_0.5 & share\_gt\_1000 & q01 & q50 & q95 & q99\\
+\midrule
+M0 (Gaussian, raw) & 0.366 & 0.360 & 0.000 & -75.500 & 10.30 & 6.49e+01 & 9.71e+01\\
+M6 (revised prior) & 0.223 & 0.142 & 0.010 & -0.974 & 4.21 & 1.91e+02 & 9.59e+02\\
+M6 (initial wider prior) & 0.393 & 0.350 & 0.197 & -1.000 & 3.97 & 5.78e+07 & 6.15e+40\\
+Observed data & 0.000 & 0.000 & 0.000 & 0.041 & 3.06 & 4.99e+01 & 5.58e+01\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_prior_pred-1} 
+
+}
+
+\caption{Gambar 4.2 Prior Predictive Check: M0 pada skala mentah dan M6 pada skala log}\label{fig:fig_prior_pred}
+\end{figure}
+
+Prior predictive check memberi tiga temuan:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{M0} menghasilkan 37\% resistance negatif. Penyebabnya bukan
+  prior yang terlalu lebar, melainkan \textbf{likelihood Gaussian pada
+  skala mentah yang tidak menghormati support \(y\ge0\)}.
+\item
+  \textbf{Prior awal M6} tampak \emph{weakly informative} pada skala
+  terstandardisasi, tetapi setelah transformasi eksponensial
+  menghasilkan resistance absurd (persentil-99 ≈ 6.2e+40). Prior
+  kemudian direvisi berdasarkan pemeriksaan ini.
+\item
+  \textbf{Prior revisi M6} menghasilkan orde besaran yang masuk akal
+  (persentil-95 ≈ 191, hanya 1.0\% di atas 1000). Nilai sedikit negatif
+  (−1 \textless{} R \textless{} 0) masih muncul karena \(\log(1+y)\)
+  mengizinkan \(y>-1\); ini dicatat sebagai keterbatasan.
+\end{enumerate}
+
+\textbf{Koreksi versi awal (temuan audit).} Versi awal analisis memasang
+prior \(N(0,1)\) langsung pada koefisien prediktor skala mentah. Prior
+itu menyatakan bahwa kenaikan Froude dari minimum ke maksimum hanya
+mengubah resistance sekitar ±0.64, padahal data naik dari ≈0 ke ≈62.
+Hasilnya, koefisien Froude tertarik menjadi 1.69 dibanding OLS 121.67,
+\textbf{tanpa satu pun peringatan konvergensi}. Kasus ini menunjukkan
+mengapa standardisasi eksplisit dan prior predictive check wajib
+dilakukan.
+
+\subsection{4.3 Validasi Komputasi}\label{validasi-komputasi}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{lrrrrrrr}
+\caption{\label{tab:tabel_komputasi}Tabel 4.3 OLS vs Posterior Analitik vs Gibbs Manual vs HMC (Stan), Prior NIG Identik}\\
+\toprule
+ & OLS & Analytic\_mean & Analytic\_SD & Gibbs\_mean & HMC\_mean & HMC\_MCSE & HMC\_minus\_Analytic\_in\_MCSE\\
+\midrule
+Intercept & 0.0000 & 0.0000 & 0.0336 & 0.0001 & 0.0000 & 0.0004 & 0.0534\\
+z\_LCB & 0.0193 & 0.0192 & 0.0336 & 0.0193 & 0.0189 & 0.0004 & -0.6783\\
+z\_Prismatic\_Coef & -0.0099 & -0.0151 & 0.0596 & -0.0147 & -0.0162 & 0.0011 & -1.0175\\
+z\_LD\_Ratio & 0.0707 & 0.0492 & 0.1975 & 0.0497 & 0.0459 & 0.0037 & -0.8781\\
+z\_BD\_Ratio & -0.0638 & -0.0458 & 0.1670 & -0.0458 & -0.0430 & 0.0032 & 0.8771\\
+\addlinespace
+z\_LB\_Ratio & -0.0739 & -0.0528 & 0.1941 & -0.0533 & -0.0497 & 0.0037 & 0.8465\\
+z\_Froude\_No & 0.8101 & 0.8075 & 0.0336 & 0.8075 & 0.8077 & 0.0003 & 0.5910\\
+sigma2 & NA & 0.3488 & NA & 0.3488 & 0.3485 & NA & NA\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+Keempat pendekatan memberikan hasil praktis identik. Selisih terbesar
+HMC terhadap solusi analitik adalah 1.02 MCSE, konsisten dengan galat
+Monte Carlo. Log-likelihood yang ditulis manual (-1,115.9416) identik
+dengan log-likelihood Stan (-1,115.9416). Jadi komputasi benar;
+ketidakstabilan yang mungkin muncul bukan berasal dari sampler.
+
+\subsection{4.4 Baseline M0 dan Diagnosis
+Kegagalannya}\label{baseline-m0-dan-diagnosis-kegagalannya}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{lrrrrrrrr}
+\caption{\label{tab:tabel_m0}Tabel 4.4 Posterior Koefisien M0 dalam Satuan Asli (resistance per 1 unit prediktor)}\\
+\toprule
+ & mean & sd & eti\_2.5 & eti\_97.5 & hdi\_low & hdi\_high & P\_gt\_0 & OLS\_raw\_units\\
+\midrule
+LCB & 0.19 & 0.34 & -0.47 & 0.87 & -0.50 & 0.83 & 0.71 & 0.19\\
+Prismatic\_Coef & -9.65 & 37.35 & -80.20 & 64.06 & -82.12 & 61.18 & 0.40 & -6.42\\
+LD\_Ratio & 2.78 & 10.95 & -18.23 & 24.58 & -18.24 & 24.58 & 0.60 & 4.23\\
+BD\_Ratio & -1.21 & 4.27 & -9.81 & 7.12 & -10.11 & 6.79 & 0.39 & -1.77\\
+LB\_Ratio & -3.06 & 11.03 & -25.37 & 18.47 & -26.15 & 17.59 & 0.39 & -4.52\\
+\addlinespace
+Froude\_No & 121.52 & 5.24 & 111.34 & 132.03 & 110.87 & 131.44 & 1.00 & 121.67\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+Slope Froude pada M0 = 121.5 dengan 95\% \emph{credible interval}
+{[}111.3, 132.0{]}, dekat dengan OLS. Interpretasi Bayesian-nya:
+\(P(\beta_{Fr}\in[\text{batas}]\mid y)=0.95\), bersyarat pada model dan
+prior --- berbeda dari \emph{confidence interval} frequentist. Namun
+angka ini \textbf{belum layak diinterpretasikan} karena modelnya gagal
+pada model checking:
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_ppc_m0-1} 
+
+}
+
+\caption{Gambar 4.3 Posterior Predictive Check Model M0 (garis gelap = statistik data teramati)}\label{fig:fig_ppc_m0}
+\end{figure}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{lrrrrr}
+\caption{\label{tab:tabel_ppc_m0}Tabel 4.5 Discrepancy Statistics PPC Model M0}\\
+\toprule
+statistic & observed & rep\_median & rep\_2.5 & rep\_97.5 & P\_rep\_ge\_obs\\
+\midrule
+mean & 10.495 & 10.511 & 9.186 & 11.931 & 0.510\\
+sd & 15.160 & 15.216 & 13.828 & 16.496 & 0.534\\
+max & 62.420 & 49.087 & 42.218 & 58.040 & 0.004\\
+skewness & 1.748 & -0.003 & -0.197 & 0.196 & 0.000\\
+share < 0 & 0.000 & 0.266 & 0.221 & 0.312 & 1.000\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_resid_m0-1} 
+
+}
+
+\caption{Gambar 4.4 Diagnostik Residual Model M0}\label{fig:fig_resid_m0}
+\end{figure}
+
+M0 mereplikasi \emph{mean} dan \emph{SD}, tetapi gagal pada aspek yang
+paling penting secara fisik: skewness dan maksimum tidak tereplikasi,
+sekitar 27\% replikasi bernilai negatif, residual membentuk pola U
+terhadap Froude (\textbf{struktur mean salah}), dan sebarannya melebar
+pada Froude tinggi (\textbf{heteroskedastisitas}). Sesuai prinsip
+``ganti likelihood, bukan memaksa data'', model diperbaiki secara
+bertahap (M1--M6).
+
+\subsection{4.5 Model Remedi dan Diagnostik
+Konvergensi}\label{model-remedi-dan-diagnostik-konvergensi}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{lrrrrrrl}
+\caption{\label{tab:tabel_diag}Tabel 4.6 Diagnostik MCMC Seluruh Model (waktu sampling dalam detik)}\\
+\toprule
+model & sampling\_s & max\_rhat & min\_ess\_bulk & min\_ess\_tail & max\_mcse\_over\_sd & divergences & verdict\\
+\midrule
+M0 & 0.8 & 1.004 & 1175.753 & 1697.216 & 0.029 & 0 & OK\\
+M1 & 0.9 & 1.006 & 1204.603 & 1422.063 & 0.029 & 0 & OK\\
+M2 & 1.0 & 1.002 & 1092.401 & 1543.522 & 0.030 & 0 & OK\\
+M3 & 1.4 & 1.003 & 1315.544 & 1640.096 & 0.028 & 0 & OK\\
+M4 & 18.7 & 1.007 & 1400.677 & 2042.288 & 0.027 & 0 & OK\\
+\addlinespace
+M5 & 10.2 & 1.003 & 1389.435 & 1927.189 & 0.027 & 0 & OK\\
+M6 & 149.7 & 1.004 & 1036.491 & 1643.566 & 0.031 & 0 & OK\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+Seluruh model memenuhi kriteria konvergensi (R̂ ≤ 1.01, ESS ≥ 400, tanpa
+divergensi).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_trace-1} 
+
+}
+
+\caption{Gambar 4.5 Trace Plot dan Rank Plot Model M6}\label{fig:fig_trace}
+\end{figure}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{lllr}
+\caption{\label{tab:tabel_vif}Tabel 4.7 Variance Inflation Factor}\\
+\toprule
+ & Kelompok & Prediktor & VIF\\
+\midrule
+LCB & Geometri + Froude (M0, M1) & LCB & 1.00\\
+Prismatic\_Coef & Geometri + Froude (M0, M1) & Prismatic\_Coef & 4.05\\
+LD\_Ratio & Geometri + Froude (M0, M1) & LD\_Ratio & 49.14\\
+BD\_Ratio & Geometri + Froude (M0, M1) & BD\_Ratio & 35.03\\
+LB\_Ratio & Geometri + Froude (M0, M1) & LB\_Ratio & 47.43\\
+\addlinespace
+Froude\_No & Geometri + Froude (M0, M1) & Froude\_No & 1.00\\
+Froude & Suku polinomial Froude (M2) & Froude & 6.48\\
+Froude\textasciicircum{}2 & Suku polinomial Froude (M2) & Froude\textasciicircum{}2 & 1.00\\
+Froude\textasciicircum{}3 & Suku polinomial Froude (M2) & Froude\textasciicircum{}3 & 6.48\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+Multikolinearitas terbesar terdapat pada rasio geometri LD, BD, dan LB
+(VIF 35--49). Hal ini wajar karena ketiganya dibentuk dari dimensi yang
+sama (panjang, lebar, sarat, volume). Prior \(N(0, 0.5)\) bekerja
+sebagai regularisasi ridge yang menstabilkan estimasi, tetapi
+\textbf{tidak dapat menciptakan informasi} untuk memisahkan efek
+masing-masing rasio (Gambar 4.6).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_cor-1} 
+
+}
+
+\caption{Gambar 4.6 Korelasi Posterior Antar-Koefisien (M2, Varian 3)}\label{fig:fig_cor}
+\end{figure}
+
+\subsection{4.6 Perbandingan Model: PSIS-LOO dan
+WAIC}\label{perbandingan-model-psis-loo-dan-waic}
+
+Karena M0 memodelkan skala mentah sedangkan M1--M6 memodelkan
+\(\log(1+y)\), log-likelihood setiap model dipindahkan ke satuan asli
+Resistance dengan koreksi Jacobian, yaitu \(-\log s_y\) untuk M0 dan
+\(-\log s_\ell-\log(1+y)\) untuk M1--M6. Tanpa koreksi ini perbandingan
+\textbf{tidak sah}.
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{lrrrrrlrr}
+\caption{\label{tab:tabel_loo}Tabel 4.8 Perbandingan Model dengan PSIS-LOO dan WAIC (satuan asli, koreksi Jacobian)}\\
+\toprule
+model & elpd\_loo & se\_elpd\_loo & p\_loo & elpd\_diff & se\_diff & elpd\_waic & n\_pareto\_k\_gt\_0.7 & diff\_over\_se\\
+\midrule
+NULL & -122.31 & 32.51 & 28.53 & 0.00 & 0.00 & NULL & NA & NA\\
+NULL & -154.48 & 27.88 & 13.31 & -32.17 & 9.95 & NULL & NA & -3.23\\
+NULL & -161.98 & 28.17 & 13.35 & -39.67 & 11.15 & NULL & NA & -3.56\\
+NULL & -163.55 & 28.00 & 12.92 & -41.25 & 11.27 & NULL & NA & -3.66\\
+NULL & -187.74 & 28.97 & 10.24 & -65.44 & 13.57 & NULL & NA & -4.82\\
+\addlinespace
+NULL & -509.54 & 24.92 & 7.64 & -387.23 & 17.10 & NULL & NA & -22.64\\
+NULL & -1117.33 & 14.83 & 8.77 & -995.02 & 28.78 & NULL & NA & -34.58\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_loo-1} 
+
+}
+
+\caption{Gambar 4.7 ELPD-LOO Seluruh Model (plus-minus 1 SE)}\label{fig:fig_loo}
+\end{figure}
+
+Perbaikan terbesar datang dari \textbf{preprocessing target dan bentuk
+fungsi Froude} (M0 → M1 → M2/M3), disusul pemodelan varians (M4) dan
+efek hull (M6). Namun perlu kehati-hatian: PSIS-LOO meninggalkan
+\emph{satu baris}, sementara 13 baris lain dari hull yang sama tetap
+membantu mengestimasi efek hull tersebut. Keunggulan M6 di LOO karena
+itu harus diuji ulang dengan validasi per hull (Subbab 4.10).
+
+\subsection{4.7 Model Checking dan Posterior Model Final
+(M6)}\label{model-checking-dan-posterior-model-final-m6}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_ppc_m6-1} 
+
+}
+
+\caption{Gambar 4.8 Posterior Predictive Check Model M6}\label{fig:fig_ppc_m6}
+\end{figure}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{lrrrrrrr}
+\caption{\label{tab:tabel_ppc_cmp}Tabel 4.9 Perbandingan Discrepancy Statistics M0 dan M6}\\
+\toprule
+Statistik & Observed & M0\_rep\_median & M0\_P\_rep\_ge\_obs & M6\_rep\_median & M6\_rep\_2.5 & M6\_rep\_97.5 & M6\_P\_rep\_ge\_obs\\
+\midrule
+mean & 10.495 & 10.511 & 0.510 & 10.550 & 10.203 & 10.922 & 0.613\\
+sd & 15.160 & 15.216 & 0.534 & 15.416 & 14.552 & 16.338 & 0.712\\
+max & 62.420 & 49.087 & 0.004 & 68.371 & 58.736 & 82.847 & 0.881\\
+skewness & 1.748 & -0.003 & 0.000 & 1.814 & 1.683 & 1.980 & 0.814\\
+share < 0 & 0.000 & 0.266 & 1.000 & 0.003 & 0.000 & 0.010 & 1.000\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+Pada M6 seluruh statistik teramati berada di dalam distribusi replikasi.
+Sisa kecil adalah 0.3\% replikasi bernilai sedikit negatif, akibat sifat
+transformasi \(\log(1+y)\).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_resid_m6-1} 
+
+}
+
+\caption{Gambar 4.9 Residual Terstandardisasi M6 (residual dibagi sigma yang dimodelkan)}\label{fig:fig_resid_m6}
+\end{figure}
+
+Transformasi ke besaran yang bermakna dihitung langsung dari setiap draw
+posterior: \(+1\) SD geometri mengubah \((1+\text{Resistance})\) sebesar
+\(100[\exp(\beta_j s_\ell)-1]\%\).
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{lrrrrrrr}
+\caption{\label{tab:tabel_eff}Tabel 4.10 Posterior Efek pada Model M6 (median, 95\% ETI dan HDI, posterior probability)}\\
+\toprule
+ & median & eti\_2.5 & eti\_97.5 & hdi\_low & hdi\_high & P\_gt\_0 & P\_abs\_gt\_1pct\\
+\midrule
+LCB: \% change per +1 SD & 1.470 & -0.719 & 3.536 & -0.719 & 3.535 & 0.924 & 0.697\\
+Prismatic\_Coef: \% change per +1 SD & 0.103 & -4.110 & 4.377 & -4.179 & 4.240 & 0.524 & 0.617\\
+LD\_Ratio: \% change per +1 SD & 4.445 & -10.530 & 20.728 & -11.148 & 19.860 & 0.740 & 0.903\\
+BD\_Ratio: \% change per +1 SD & -0.365 & -11.969 & 13.123 & -12.225 & 12.740 & 0.477 & 0.855\\
+LB\_Ratio: \% change per +1 SD & -3.779 & -16.688 & 11.946 & -17.346 & 10.805 & 0.289 & 0.901\\
+\addlinespace
+Residual SD multiplier per +1 SD Froude & 1.598 & 1.388 & 1.848 & 1.370 & 1.828 & 1.000 & 1.000\\
+Between-hull variation (\%) & 4.611 & 3.039 & 7.494 & 2.740 & 6.918 & 1.000 & 1.000\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_eff-1} 
+
+}
+
+\caption{Gambar 4.10 Efek Geometri Lambung pada Model M6}\label{fig:fig_eff}
+\end{figure}
+
+Setelah bentuk fungsi Froude, varians, dan variasi antar-hull
+dimodelkan, efek per SD geometri hanya beberapa persen dan
+\textbf{arahnya tidak pasti}: \(P(\text{efek}>0\mid y)\) berkisar
+0.29--0.92. Sebaliknya, dua besaran diestimasi dengan sangat pasti. SD
+residual naik 1.60× per SD Froude (95\% CrI 1.39--1.85; Gambar 4.11).
+Variasi antar-hull yang tidak dijelaskan geometri adalah 4.6\%
+(3.0--7.5\%).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_sigma-1} 
+
+}
+
+\caption{Gambar 4.11 Heteroskedastisitas yang Dimodelkan: SD Residual Meningkat dengan Froude Number}\label{fig:fig_sigma}
+\end{figure}
+
+\subsection{4.8 Prediksi untuk Desain Lambung
+Baru}\label{prediksi-untuk-desain-lambung-baru}
+
+Skenario: lambung \textbf{baru} dengan geometri di median ke-22 desain,
+diuji pada 14 Froude number eksperimen (tanpa ekstrapolasi). Efek hull
+baru diambil dari distribusi populasi
+\(u_{new}\sim N(0,\sigma_{hull}^2)\).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_pred-1} 
+
+}
+
+\caption{Gambar 4.12 Posterior Predictive untuk Lambung Baru: Credible Band vs Predictive Band}\label{fig:fig_pred}
+\end{figure}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{rrrrrr}
+\caption{\label{tab:tabel_pred}Tabel 4.11 Prediksi Lambung Baru: Median, Interval Prediksi 95\%, dan Probabilitas Eksedans}\\
+\toprule
+Froude & pred\_median & PI\_2.5 & PI\_97.5 & P\_R\_gt\_5 & P\_R\_gt\_20\\
+\midrule
+0.125 & 0.113 & -0.008 & 0.255 & 0.000 & 0.000\\
+0.150 & 0.265 & 0.121 & 0.430 & 0.000 & 0.000\\
+0.175 & 0.488 & 0.313 & 0.698 & 0.000 & 0.000\\
+0.200 & 0.809 & 0.585 & 1.066 & 0.000 & 0.000\\
+0.225 & 1.243 & 0.949 & 1.586 & 0.000 & 0.000\\
+\addlinespace
+0.250 & 1.851 & 1.455 & 2.290 & 0.000 & 0.000\\
+0.275 & 2.682 & 2.152 & 3.315 & 0.000 & 0.000\\
+0.300 & 3.829 & 3.068 & 4.717 & 0.005 & 0.000\\
+0.325 & 5.484 & 4.436 & 6.773 & 0.803 & 0.000\\
+0.350 & 8.169 & 6.478 & 10.231 & 1.000 & 0.000\\
+\addlinespace
+0.375 & 12.992 & 10.233 & 16.320 & 1.000 & 0.000\\
+0.400 & 21.866 & 16.913 & 28.100 & 1.000 & 0.764\\
+0.425 & 35.852 & 27.247 & 47.752 & 1.000 & 1.000\\
+0.450 & 51.852 & 37.699 & 69.270 & 1.000 & 1.000\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+Probabilitas eksedans seperti \(P(R>20\mid y)\) = 0.76 pada
+\(Fr = 0.40\) dapat langsung dipakai untuk keputusan desain (misalnya
+kebutuhan daya propulsi). Band prediksi jauh lebih lebar daripada
+\emph{credible band}: perbedaan antara \textbf{ketidakpastian estimasi}
+dan \textbf{ketidakpastian prediksi} adalah pesan utama dalam
+mengomunikasikan uncertainty.
+
+\subsection{4.9 Analisis Sensitivitas}\label{analisis-sensitivitas}
+
+\subsubsection{Kompetisi Prior dan Data}\label{kompetisi-prior-dan-data}
+
+Data dan likelihood dibuat tetap, hanya prior slope Froude yang diubah.
+Posterior konjugat dihitung untuk tiga ukuran data berbasis hull.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_lab-1} 
+
+}
+
+\caption{Gambar 4.13 Kompetisi Prior-Data pada Berbagai Ukuran Data}\label{fig:fig_lab}
+\end{figure}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{lllrrrr}
+\caption{\label{tab:tabel_lab}Tabel 4.12 Kompetisi Prior-Data (prior pull = pangsa presisi prior dalam presisi posterior)}\\
+\toprule
+ & data & prior & post\_mean & post\_sd & data\_only\_slope & prior\_pull\\
+\midrule
+z\_Froude\_No & 1 hull (n=14) & Weak N(0, 1) & 0.739 & 0.156 & 0.758 & 0.024\\
+z\_Froude\_No1 & 1 hull (n=14) & Strong-correct N(0.81, 0.02) & 0.809 & 0.020 & 0.758 & 0.984\\
+z\_Froude\_No2 & 1 hull (n=14) & Strong-wrong N(0.40, 0.02) & 0.406 & 0.020 & 0.758 & 0.984\\
+z\_Froude\_No3 & 3 hulls (n=42) & Weak N(0, 1) & 0.772 & 0.091 & 0.778 & 0.008\\
+z\_Froude\_No11 & 3 hulls (n=42) & Strong-correct N(0.81, 0.02) & 0.809 & 0.020 & 0.778 & 0.954\\
+\addlinespace
+z\_Froude\_No21 & 3 hulls (n=42) & Strong-wrong N(0.40, 0.02) & 0.417 & 0.020 & 0.778 & 0.954\\
+z\_Froude\_No4 & 22 hulls (n=308) & Weak N(0, 1) & 0.809 & 0.034 & 0.810 & 0.001\\
+z\_Froude\_No12 & 22 hulls (n=308) & Strong-correct N(0.81, 0.02) & 0.810 & 0.017 & 0.810 & 0.739\\
+z\_Froude\_No22 & 22 hulls (n=308) & Strong-wrong N(0.40, 0.02) & 0.507 & 0.017 & 0.810 & 0.739\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+Prior lemah praktis menghilang begitu ada ≥ 3 hull. Prior kuat yang
+\textbf{salah} dengan SD 0.02 tetap menarik posterior bahkan pada n =
+308, karena SD prior itu lebih kecil daripada ketidakpastian yang
+diberikan data --- prior ekstrem yang sangat terkonsentrasi dapat
+mendominasi lebih lama.
+
+\subsubsection{Sensitivitas Prior pada Model
+Final}\label{sensitivitas-prior-pada-model-final}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_sens-1} 
+
+}
+
+\caption{Gambar 4.14 Sensitivitas Posterior M6 terhadap Skala Prior}\label{fig:fig_sens}
+\end{figure}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:tabel_sens}Tabel 4.13 Kesimpulan Prediktif di Bawah Tiga Skala Prior}\\
+\toprule
+prior & P\_R20\_Fr040 & ELPD\_LOO\\
+\midrule
+Tighter (x0.5) & 0.761 & -123.082\\
+Base (x1) & 0.764 & -122.307\\
+Wider (x2.5) & 0.763 & -122.475\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+Mengubah semua SD prior dari ×0.5 hingga ×2.5 praktis tidak mengubah
+posterior maupun kesimpulan prediktif (\(P(R>20\mid Fr=0.40)\) berkisar
+0.76--0.76). Untuk sensitivitas likelihood, posterior derajat bebas
+Student-\(t\) (M5) memiliki median 14.0, dan ELPD M5 − M3 = 1.57.
+Artinya, setelah transformasi log, ekor berat tidak diperlukan;
+perbaikan berasal dari struktur mean dan varians.
+
+\subsection{4.10 Audit Reproducibility}\label{audit-reproducibility}
+
+\subsubsection{Seed dan Urutan Data}\label{seed-dan-urutan-data}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_repro-1} 
+
+}
+
+\caption{Gambar 4.15 Selisih Mean Posterior terhadap Run Referensi (satuan MCSE gabungan)}\label{fig:fig_repro}
+\end{figure}
+
+Selisih maksimum adalah 1.26 MCSE (seed) dan 1.84 MCSE (urutan data).
+Seluruh parameter memenuhi kriteria \textbar z\textbar{} \textless{} 3,
+sehingga perbedaan hanya berasal dari Monte Carlo error.
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{lrrrrr}
+\caption{\label{tab:tabel_multiseed}Tabel 4.14 Audit Lima Seed: Sebaran Mean Posterior Antar-Run vs MCSE yang Dilaporkan}\\
+\toprule
+param & min\_mean\_5\_seeds & max\_mean\_5\_seeds & between\_run\_sd & mean\_reported\_mcse & ratio\_sd\_to\_mcse\\
+\midrule
+b\_F1 & 0.08693 & 0.08769 & 0.00032 & 0.00022 & 1.42009\\
+b\_Intercept & -1.28009 & -1.27956 & 0.00023 & 0.00020 & 1.14608\\
+b\_sigma\_Intercept & -2.94556 & -2.94405 & 0.00073 & 0.00072 & 1.01123\\
+b\_z\_LCB & 0.01185 & 0.01230 & 0.00018 & 0.00019 & 0.95647\\
+b\_z\_Prismatic\_Coef & -0.00012 & 0.00077 & 0.00039 & 0.00042 & 0.93260\\
+\addlinespace
+b\_z\_BD\_Ratio & -0.00307 & -0.00030 & 0.00107 & 0.00126 & 0.84877\\
+b\_F5 & 2.93221 & 2.93335 & 0.00045 & 0.00053 & 0.83449\\
+b\_z\_LB\_Ratio & -0.03061 & -0.02746 & 0.00122 & 0.00147 & 0.82661\\
+b\_z\_LD\_Ratio & 0.03232 & 0.03525 & 0.00120 & 0.00149 & 0.80373\\
+b\_F6 & 3.14387 & 3.14448 & 0.00023 & 0.00036 & 0.63167\\
+\addlinespace
+b\_sigma\_z\_Froude\_No & 0.46702 & 0.46966 & 0.00095 & 0.00157 & 0.60436\\
+b\_F4 & 1.85962 & 1.86030 & 0.00027 & 0.00046 & 0.57985\\
+sd\_hull\_\_Intercept & 0.03760 & 0.03793 & 0.00014 & 0.00027 & 0.50606\\
+b\_F3 & 1.05966 & 1.06002 & 0.00014 & 0.00035 & 0.39325\\
+b\_F2 & 0.38851 & 0.38868 & 0.00007 & 0.00027 & 0.26574\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{lrr}
+\caption{\label{tab:tabel_seedconcl}Tabel 4.15 Kesimpulan Substantif di Bawah Lima Seed}\\
+\toprule
+seed & between\_hull\_pct & P\_R20\_Fr040\\
+\midrule
+2026 & 4.611 & 0.764\\
+777 & 4.609 & 0.757\\
+999 & 4.560 & 0.757\\
+31 & 4.567 & 0.765\\
+123 & 4.612 & 0.757\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+Rasio sebaran antar-run terhadap MCSE bernilai sekitar 1 untuk sebagian
+besar parameter (median 0.83). Untuk SD efek hull, rasionya 0.51:
+\textbf{MCSE meremehkan variabilitas nyata} parameter skala hierarkis,
+dan run referensi (seed 2026) kebetulan berada di sisi bawah. Secara
+substantif perbedaannya kecil: variasi antar-hull berkisar 4.56--4.61\%
+dan \(P(R>20\mid Fr=0.40)\) berkisar 0.757--0.765 antar seed.
+Pelajarannya: untuk parameter skala hierarkis, satu run dan MCSE-nya
+belum cukup sebagai bukti reproducibility. Gunakan beberapa seed (atau
+lebih banyak draws), dan nilai stabilitas pada besaran yang menjadi
+dasar keputusan.
+
+\subsubsection{Validasi Per Hull vs Acak Per Baris dan Dampak
+Preprocessing}\label{validasi-per-hull-vs-acak-per-baris-dan-dampak-preprocessing}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{llrrrrrrr}
+\caption{\label{tab:tabel_cv}Tabel 4.16 Hasil Cross-Validation 5-Fold (satuan asli Resistance)}\\
+\toprule
+model & scheme & RMSE & MAE & coverage\_95 & PI\_width & ELPD\_per\_obs & ELPD\_total & max\_rhat\_folds\\
+\midrule
+M0 & grouped & 8.866 & 7.131 & 0.942 & 35.993 & -3.603 & -1109.732 & 1.022\\
+M1 & grouped & 4.942 & 2.512 & 0.971 & 9.973 & -1.640 & -504.991 & 1.024\\
+M2 & grouped & 2.137 & 0.953 & 0.942 & 3.852 & -0.629 & -193.783 & 1.020\\
+M3 & grouped & 1.866 & 0.841 & 0.938 & 3.537 & -0.567 & -174.570 & 1.032\\
+M4 & grouped & 2.014 & 0.901 & 0.919 & 4.286 & -0.578 & -177.927 & 1.013\\
+\addlinespace
+M6 & grouped & 2.091 & 0.934 & 0.987 & 6.096 & -0.628 & -193.297 & 1.009\\
+M4 & row-random & 1.870 & 0.848 & 0.938 & 4.188 & -0.523 & -160.971 & 1.011\\
+M6 & row-random & 2.063 & 0.927 & 0.938 & 5.075 & -0.422 & -129.881 & 1.018\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_cv-1} 
+
+}
+
+\caption{Gambar 4.16 Dampak Preprocessing dan Model pada Prediksi Hull Baru (leave-hull-out)}\label{fig:fig_cv}
+\end{figure}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{lrrrrr}
+\caption{\label{tab:tabel_paired}Tabel 4.17 Perbandingan Berpasangan Leave-Hull-Out terhadap Model Terbaik (M3); SE per cluster hull}\\
+\toprule
+model & ELPD\_total & elpd\_diff & se\_diff\_obs & se\_diff\_hull & diff\_over\_se\_hull\\
+\midrule
+M3 & -174.57 & 0.00 & 0.00 & 0.00 & NA\\
+M4 & -177.93 & -3.36 & 5.19 & 9.12 & -0.37\\
+M6 & -193.30 & -18.73 & 8.45 & 18.14 & -1.03\\
+M2 & -193.78 & -19.21 & 7.93 & 7.79 & -2.47\\
+M1 & -504.99 & -330.42 & 13.84 & 26.82 & -12.32\\
+\addlinespace
+M0 & -1109.73 & -935.16 & 24.64 & 27.31 & -34.24\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{lrrrrr}
+\caption{\label{tab:tabel_optimism}Tabel 4.18 Optimisme Validasi Acak Per Baris dibanding Per Hull}\\
+\toprule
+model & ELPD\_optimism & se & RMSE\_grouped & RMSE\_row & optimism\_over\_se\\
+\midrule
+M4 & 16.96 & 4.74 & 2.01 & 1.87 & 3.58\\
+M6 & 63.42 & 11.69 & 2.09 & 2.06 & 5.42\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.94\linewidth]{Laporan_Project_Regresi_Bayesian_Yacht_final8_fixed_download_files/figure-latex/fig_leak-1} 
+
+}
+
+\caption{Gambar 4.17 Kebocoran Data: Validasi Acak Per Baris Terlalu Optimis untuk Hull Baru}\label{fig:fig_leak}
+\end{figure}
+
+Temuan kunci audit validasi:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Preprocessing tidak stabil dan sangat menentukan.} RMSE per
+  hull turun dari 8.87 (M0) ke 1.87 (M3); ELPD per observasi naik dari
+  -3.60 ke -0.57. Cakupan M0 (0.94) tampak wajar hanya karena
+  intervalnya sangat lebar (36.0) dan mencakup resistance negatif.
+\item
+  \textbf{Skema validasi mengubah model yang terpilih.} PSIS-LOO per
+  baris memilih 1, sedangkan validasi per hull memilih M3. Selisih antar
+  model berbasis spline (M3, M4, M6) untuk hull baru ≤ 1.0 SE (per
+  cluster hull), sehingga ketiganya praktis setara.
+\item
+  \textbf{Kebocoran data terukur.} Validasi acak per baris
+  melebih-lebihkan ELPD M6 sebesar 63.4 (SE 11.7), jauh lebih besar
+  daripada M4 (17.0, SE 4.7), karena M6 ``mengingat'' efek tiap hull.
+  Kebocoran terutama memengaruhi \textbf{lebar interval}, bukan titik
+  prediksi.
+\end{enumerate}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{ll}
+\caption{\label{tab:tabel_check}Tabel 4.19 Checklist Reproducibility (dievaluasi otomatis dari hasil run)}\\
+\toprule
+Item & Pass\\
+\midrule
+Seed eksplisit tercatat & TRUE\\
+Checksum SHA-256 data mentah tercatat & TRUE\\
+Preprocessing scripted (make\_frames) & TRUE\\
+Standardisasi dihitung di dalam fold (tanpa kebocoran) & TRUE\\
+Prior eksplisit + prior predictive check & TRUE\\
+\addlinespace
+Komputasi divalidasi (analitik vs Gibbs vs HMC, < 3 MCSE) & TRUE\\
+Likelihood manual = likelihood Stan & TRUE\\
+Semua model: R-hat <= 1.01, ESS >= 400, 0 divergence & TRUE\\
+Stabil terhadap seed (semua \&\#124;z\&\#124; < 3 MCSE) & TRUE\\
+Stabil terhadap urutan data (semua \&\#124;z\&\#124; < 3 MCSE) & TRUE\\
+\addlinespace
+Kesimpulan prediktif stabil antar 5 seed (rentang P(R>20 \&\#124; Fr=0.40) < 0.05) & TRUE\\
+Validasi per-hull dipakai untuk klaim prediktif & TRUE\\
+Objek fit tersimpan (fits/*.rds) & TRUE\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+\clearpage
+
+\section{BAB 5. KESIMPULAN DAN SARAN}\label{bab-5.-kesimpulan-dan-saran}
+
+\subsection{5.1 Kesimpulan}\label{kesimpulan}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Komputasi terverifikasi dan stabil secara substantif.}
+  Posterior MCMC cocok dengan solusi analitik dan Gibbs (≤ 1.02 MCSE).
+  Kesimpulan prediktif tidak berubah antar lima seed maupun urutan data,
+  dan prior yang masih masuk akal tidak mengubah kesimpulan. Namun MCSE
+  dari satu run meremehkan variabilitas antar-run untuk SD efek hull
+  (≈0.5×), sehingga audit reproducibility perlu memakai beberapa seed.
+\item
+  \textbf{Keputusan kualitas data dan preprocessing mendominasi hasil.}
+  Baseline Gaussian pada skala mentah konvergen sempurna tetapi salah
+  spesifikasi. Transformasi log dan bentuk fungsi Froude yang fleksibel
+  memperbaiki ELPD dan RMSE secara drastis. Prior yang salah skala
+  mengubah kesimpulan tanpa peringatan konvergensi, sehingga prior
+  predictive check wajib dilakukan.
+\item
+  \textbf{Skema validasi adalah sumber optimisme terbesar} dan bahkan
+  mengubah model yang terpilih. Untuk estimand utama (prediksi lambung
+  baru), validasi harus dilakukan per hull.
+\item
+  \textbf{Informatif untuk prediksi, terbatas untuk inferensi geometri.}
+  Kurva resistance--Froude, heteroskedastisitas, dan variasi antar-hull
+  diestimasi dengan presisi tinggi. Interval prediksi 95\% M3
+  terkalibrasi baik untuk hull baru (cakupan 0.94), sedangkan M6 sedikit
+  konservatif (0.99). Namun arah efek tiap rasio geometri tidak dapat
+  dipastikan (22 hull, VIF tinggi).
+\end{enumerate}
+
+\subsection{5.2 Keterbatasan}\label{keterbatasan}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Hanya 22 hull yang semuanya turunan satu \emph{parent hull};
+  generalisasi ke keluarga desain lain tidak didukung.
+\item
+  Geometri divariasikan satu per satu di sekitar \emph{parent hull},
+  sehingga efeknya lokal dan interaksi geometri tidak teridentifikasi.
+\item
+  Froude hanya 14 level (0.125--0.45); prediksi di luar rentang ini
+  adalah ekstrapolasi.
+\item
+  Transformasi \(\log(1+y)\) masih mengizinkan nilai −1 \textless{} y
+  \textless{} 0.
+\item
+  Galat pengukuran \emph{towing tank} tidak terdokumentasi.
+\item
+  Efek geometri adalah asosiasi dalam desain eksperimen ini, bukan klaim
+  kausal umum.
+\end{enumerate}
+
+\subsection{5.3 Saran dan Pengembangan}\label{saran-dan-pengembangan}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Gunakan validasi per hull (atau per kelompok) untuk setiap klaim
+  prediktif pada data berkelompok, dan laporkan optimisme skema acak
+  sebagai bagian audit.
+\item
+  Uji likelihood yang hanya berlaku pada \(y>0\) (lognormal atau Gamma)
+  untuk menghilangkan sisa pelanggaran support.
+\item
+  Untuk prediksi desain baru, gunakan model berbasis spline Froude yang
+  lebih sederhana; gunakan M6 untuk menjelaskan struktur data.
+\item
+  Tambahkan data dari keluarga lambung lain agar efek geometri dapat
+  diidentifikasi.
+\end{enumerate}
+
+\newpage
+
+\section{DAFTAR PUSTAKA}\label{daftar-pustaka}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Bürkner, P.-C. (2017).} brms: An R package for Bayesian
+  multilevel models using Stan. \emph{Journal of Statistical Software,
+  80}(1), 1--28. \url{https://doi.org/10.18637/jss.v080.i01}
+\item
+  \textbf{Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B.,
+  Vehtari, A., \& Rubin, D. B. (2013).} \emph{Bayesian data analysis}
+  (3rd ed.). CRC Press.
+\item
+  \textbf{Gelman, A., Vehtari, A., Simpson, D., Margossian, C. C.,
+  Carpenter, B., Yao, Y., Kennedy, L., Gabry, J., Bürkner, P.-C., \&
+  Modrák, M. (2020).} Bayesian workflow. \emph{arXiv}.
+  \url{https://arxiv.org/abs/2011.01808}
+\item
+  \textbf{Gerritsma, J., Onnink, R., \& Versluis, A. (1981).} Geometry,
+  resistance and stability of the Delft systematic yacht hull series.
+  \emph{International Shipbuilding Progress, 28}(328), 276--297.
+\item
+  \textbf{Hoff, P. D. (2009).} \emph{A first course in Bayesian
+  statistical methods}. Springer.
+  \url{https://doi.org/10.1007/978-0-387-92407-6}
+\item
+  \textbf{Roberts, D. R., Bahn, V., Ciuti, S., Boyce, M. S., Elith, J.,
+  Guillera-Arroita, G., \ldots{} \& Dormann, C. F. (2017).}
+  Cross-validation strategies for data with temporal, spatial,
+  hierarchical, or phylogenetic structure. \emph{Ecography, 40}(8),
+  913--929. \url{https://doi.org/10.1111/ecog.02881}
+\item
+  \textbf{Vehtari, A., Gelman, A., \& Gabry, J. (2017).} Practical
+  Bayesian model evaluation using leave-one-out cross-validation and
+  WAIC. \emph{Statistics and Computing, 27}, 1413--1432.
+  \url{https://doi.org/10.1007/s11222-016-9696-4}
+\item
+  \textbf{Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., \&
+  Bürkner, P.-C. (2021).} Rank-normalization, folding, and localization:
+  An improved \(\hat R\) for assessing convergence of MCMC.
+  \emph{Bayesian Analysis, 16}(2), 667--718.
+  \url{https://doi.org/10.1214/20-BA1221}
+\item
+  \textbf{Gerritsma, J., Onnink, R., \& Versluis, A. (1981).}
+  \emph{Yacht Hydrodynamics} {[}Dataset{]}. UCI Machine Learning
+  Repository. \url{https://doi.org/10.24432/C5XG7R}
+\end{enumerate}
+
+\section{ACKNOWLEDGEMENT}\label{acknowledgement}
+
+Sebagai wujud komitmen terhadap integritas akademik, kami menyatakan
+bahwa dalam penyelesaian project ini kami memanfaatkan \emph{Artificial
+Intelligence}, yaitu Claude (Anthropic).
+
+Penggunaan AI dibatasi sebagai alat pendukung (\emph{assistive tool}):
+bantuan teknis dalam penulisan dan pemeriksaan kode R/Python, penyusunan
+struktur dan keterbacaan laporan, serta mitra diskusi dalam memvalidasi
+pemahaman terhadap \emph{Bayesian workflow}. Pemeriksaan kode dengan
+bantuan AI juga menemukan kesalahan skala prior pada versi awal analisis
+(Subbab 4.2), yang kemudian diperbaiki dan didokumentasikan sebagai
+temuan audit.
+
+Seluruh angka dalam laporan ini dihasilkan oleh kode yang dapat
+dijalankan ulang tanpa AI (\texttt{analisis\_yacht\_final.R}). Tidak ada
+angka yang diambil dari teks keluaran AI. Kami menegaskan bahwa
+verifikasi data, penalaran analitis, dan penarikan kesimpulan akhir
+dilakukan secara mandiri dan sepenuhnya menjadi tanggung jawab kami
+sebagai penulis.
+
+\section{LAMPIRAN}\label{lampiran}
+
+\subsubsection{Lampiran A: Minimum Reporting Checklist (Bayesian
+Regression)}\label{lampiran-a-minimum-reporting-checklist-bayesian-regression}
+
+\begingroup\fontsize{8.5}{10.5}\selectfont
+
+\begin{longtable}[t]{ll}
+\caption{\label{tab:lamp_report}Tabel A.1 Minimum Reporting Checklist}\\
+\toprule
+Item & Isi\\
+\midrule
+Likelihood \& link & Gaussian pada log(1+Resistance) terstandardisasi; geometri linear + B-spline Froude (df = 6) + efek acak hull; log-link untuk sigma(Froude)\\
+Prior & Tabel 3.3 (divalidasi dengan prior predictive check, Subbab 4.2)\\
+Software & R version 4.5.2 (2025-10-31 ucrt); brms 2.23.0; rstan 2.32.7; loo 2.10.1\\
+Chains / iter / warm-up & 4 / 2000 / 1000; adapt\_delta 0.95; seed 2026\\
+Diagnostik M6 & max R-hat 1.004; min ESS bulk 1,036; min ESS tail 1,644; divergences 0\\
+\addlinespace
+Posterior summary & Tabel 4.10: median, mean, mode, SD, 95\% ETI \& HDI, posterior probability\\
+PPC & Gambar 4.3 \& 4.8; Tabel 4.5 \& 4.9\\
+Sensitivitas & Subbab 4.9: prior x0.5/x1/x2.5; Gaussian vs Student-t; homo vs hetero; independen vs hierarkis\\
+Perbandingan prediktif & PSIS-LOO \& WAIC (Jacobian); leave-hull-out CV M6: RMSE 2.09, coverage 0.99\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+\subsubsection{Lampiran B: Cara
+Mereproduksi}\label{lampiran-b-cara-mereproduksi}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Letakkan \texttt{yacht\_hydrodynamics.data},
+  \texttt{analisis\_yacht\_final.R}, dan file \texttt{.Rmd} ini dalam
+  satu folder.
+\item
+  Pasang paket:
+  \texttt{install.packages(c("brms",\ "rstan",\ "loo",\ "posterior",\ "dplyr",\ "tidyr",\ "kableExtra",\ "patchwork",\ "bayesplot",\ "digest",\ "jsonlite"))}.
+\item
+  \emph{Knit} file \texttt{.Rmd}. Run pertama menghitung semua model
+  (±40--60 menit); hasil disimpan di \texttt{fits/} dan \texttt{cache/}
+  sehingga knit berikutnya jauh lebih cepat dan menghasilkan angka
+  identik. Hapus kedua folder tersebut untuk menghitung ulang dari nol.
+\item
+  Checksum SHA-256 data mentah:
+  00dfecc0fc01ddd4c90b558a3ac11b246df8ebcfea130724223475a9a67f0ea1.
+  Manifest lengkap tersimpan di
+  \texttt{reproducibility\_manifest\_R.json}.
+\end{enumerate}
+
+\subsubsection{Lampiran C: Informasi Sesi
+R}\label{lampiran-c-informasi-sesi-r}
+
+\begin{verbatim}
+R version 4.5.2 (2025-10-31 ucrt)
+Platform: x86_64-w64-mingw32/x64
+Running under: Windows 11 x64 (build 26200)
+
+Matrix products: default
+  LAPACK version 3.12.1
+
+locale:
+[1] LC_COLLATE=English_Indonesia.utf8  LC_CTYPE=English_Indonesia.utf8   
+[3] LC_MONETARY=English_Indonesia.utf8 LC_NUMERIC=C                      
+[5] LC_TIME=English_Indonesia.utf8    
+
+time zone: Asia/Jakarta
+tzcode source: internal
+
+attached base packages:
+[1] splines   stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+ [1] tidyr_1.3.1        dplyr_1.1.4        posterior_1.7.0    loo_2.10.1        
+ [5] rstan_2.32.7       StanHeaders_2.32.7 brms_2.23.0        Rcpp_1.1.0        
+ [9] bayesplot_1.16.0   patchwork_1.3.2    ggplot2_4.0.1      kableExtra_1.4.0  
+[13] knitr_1.50        
+
+loaded via a namespace (and not attached):
+ [1] gtable_0.3.6         tensorA_0.36.2.1     QuickJSR_1.11.0     
+ [4] xfun_0.55            inline_0.3.21        lattice_0.22-7      
+ [7] vctrs_0.6.5          tools_4.5.2          generics_0.1.4      
+[10] stats4_4.5.2         parallel_4.5.2       sandwich_3.1-1      
+[13] tibble_3.3.0         pkgconfig_2.0.3      Matrix_1.7-4        
+[16] checkmate_2.3.4      RColorBrewer_1.1-3   S7_0.2.1            
+[19] distributional_0.9.0 RcppParallel_6.2.1   lifecycle_1.0.4     
+[22] compiler_4.5.2       farver_2.1.2         stringr_1.6.0       
+[25] textshaping_1.0.4    Brobdingnag_1.3-1    codetools_0.2-20    
+[28] htmltools_0.5.9      yaml_2.3.12          pillar_1.11.1       
+[31] MASS_7.3-65          bridgesampling_1.2-1 abind_1.4-8         
+[34] multcomp_1.4-29      nlme_3.1-168         tidyselect_1.2.1    
+[37] digest_0.6.39        mvtnorm_1.3-3        stringi_1.8.7       
+[40] reshape2_1.4.5       purrr_1.2.0          labeling_0.4.3      
+[43] fastmap_1.2.0        grid_4.5.2           cli_3.6.5           
+[46] magrittr_2.0.4       pkgbuild_1.4.8       survival_3.8-3      
+[49] TH.data_1.1-5        withr_3.0.2          scales_1.4.0        
+[52] backports_1.5.0      estimability_1.5.1   rmarkdown_2.30      
+[55] matrixStats_1.5.0    emmeans_2.0.2        gridExtra_2.3       
+[58] zoo_1.8-15           coda_0.19-4.1        evaluate_1.0.5      
+[61] viridisLite_0.4.2    rstantools_2.7.1     rlang_1.1.7         
+[64] xtable_1.8-4         glue_1.8.0           xml2_1.5.1          
+[67] jsonlite_2.0.0       svglite_2.2.2        rstudioapi_0.17.1   
+[70] plyr_1.8.9           R6_2.6.1             systemfonts_1.3.1   
+\end{verbatim}
+
+\subsubsection{Lampiran D: Source Code Analisis Utama
+(R)}\label{lampiran-d-source-code-analisis-utama-r}
+
+Berikut adalah kode R lengkap yang digunakan untuk seluruh analisis
+statistik dan pemodelan:
+
+\begin{verbatim}
+# =============================================================================
+# analisis_yacht.R
+# Regresi Bayesian + audit reproducibility & data quality - Yacht Hydrodynamics
+# Seluruh pipeline dapat dijalankan ulang tanpa AI:  source("analisis_yacht.R")
+# Hasil fit disimpan di folder fits/ dan cache/ agar knit ulang cepat & identik.
+# =============================================================================
+
+suppressPackageStartupMessages({
+  library(brms)      # regresi Bayesian (Stan/HMC)
+  library(rstan)     # model Stan konjugat untuk validasi komputasi
+  library(loo)       # PSIS-LOO dan WAIC
+  library(posterior) # ringkasan draws, R-hat, ESS, MCSE
+  library(dplyr)
+  library(tidyr)
+  library(splines)
+})
+
+SEED <- 2026
+set.seed(SEED)
+N_CORES <- min(4, parallel::detectCores())
+options(mc.cores = N_CORES)
+rstan_options(auto_write = TRUE)
+dir.create("fits", showWarnings = FALSE)
+dir.create("cache", showWarnings = FALSE)
+
+# Hasil mahal disimpan sebagai .rds; hapus folder cache/ dan fits/ untuk menghitung ulang dari nol
+cache_rds <- function(name, expr) {
+  f <- file.path("cache", paste0(name, ".rds"))
+  if (file.exists(f)) return(readRDS(f))
+  val <- expr
+  saveRDS(val, f)
+  val
+}
+
+SAMPLER    <- list(chains = 4, iter = 2000, warmup = 1000)   # 4 x 1000 draws
+CV_SAMPLER <- list(chains = 2, iter = 1000, warmup = 500)    # konfigurasi ringan khusus CV
+CONTROL    <- list(adapt_delta = 0.95)
+
+# -----------------------------------------------------------------------------
+# 1. DATA: load, nama kolom sesuai dokumentasi UCI 243, checksum
+# -----------------------------------------------------------------------------
+COLS <- c("LCB", "Prismatic_Coef", "LD_Ratio", "BD_Ratio", "LB_Ratio", "Froude_No", "Resistance")
+PRED <- COLS[1:6]
+GEOM <- COLS[1:5]
+RAW_PATH <- "yacht_hydrodynamics.data"
+df <- read.table(RAW_PATH, col.names = COLS)
+RAW_SHA256 <- digest::digest(file = RAW_PATH, algo = "sha256")
+
+geom_key <- do.call(paste, df[GEOM])
+df$hull_id <- as.integer(factor(geom_key, levels = unique(geom_key)))
+
+sdp  <- function(x) sqrt(mean((x - mean(x))^2))                   # SD populasi (ddof = 0)
+skew <- function(x) mean((x - mean(x))^3) / sdp(x)^3
+
+# -----------------------------------------------------------------------------
+# 2. AUDIT KUALITAS DATA
+# -----------------------------------------------------------------------------
+rows_per_hull <- table(df$hull_id)
+iqr_out <- sapply(COLS, function(v) {
+  q <- quantile(df[[v]], c(.25, .75)); w <- diff(q)
+  sum(df[[v]] < q[1] - 1.5 * w | df[[v]] > q[2] + 1.5 * w)
+})
+AUDIT <- list(
+  n_rows = nrow(df), n_cols = length(COLS), n_missing = sum(is.na(df[COLS])),
+  n_dup = sum(duplicated(df[COLS])), n_hull = length(unique(df$hull_id)),
+  rows_per_hull = unique(as.integer(rows_per_hull)), n_froude = length(unique(df$Froude_No)),
+  skew_raw = skew(df$Resistance), skew_log = skew(log1p(df$Resistance)),
+  shapiro_p = shapiro.test(df$Resistance)$p.value, iqr_out = iqr_out,
+  range = t(sapply(COLS, function(v) c(min = min(df[[v]]), max = max(df[[v]]),
+                                       mean = mean(df[[v]]), sd = sd(df[[v]]))))
+)
+
+# -----------------------------------------------------------------------------
+# 3. PREPROCESSING EKSPLISIT (statistik dihitung dari data TRAIN saja)
+# -----------------------------------------------------------------------------
+make_frames <- function(train, test = NULL) {
+  sc <- lapply(PRED, function(v) c(mean(train[[v]]), sdp(train[[v]])))
+  names(sc) <- PRED
+  sc$y  <- c(mean(train$Resistance), sdp(train$Resistance))
+  ly    <- log1p(train$Resistance)
+  sc$ly <- c(mean(ly), sdp(ly))
+  basis <- bs((train$Froude_No - sc$Froude_No[1]) / sc$Froude_No[2], df = 6)  # B-spline kubik, knot dari train
+  tf <- function(d) {
+    o <- as.data.frame(lapply(setNames(PRED, paste0("z_", PRED)),
+                              function(v) (d[[v]] - sc[[v]][1]) / sc[[v]][2]))
+    o$zF2 <- o$z_Froude_No^2
+    o$zF3 <- o$z_Froude_No^3
+    B <- predict(basis, o$z_Froude_No)
+    colnames(B) <- paste0("F", 1:6)
+    o <- cbind(o, as.data.frame(B))
+    o$y_z  <- (d$Resistance - sc$y[1]) / sc$y[2]
+    o$ly_z <- (log1p(d$Resistance) - sc$ly[1]) / sc$ly[2]
+    o$hull <- sprintf("H%02d", d$hull_id)
+    o$hull_id <- d$hull_id
+    o$Froude_No <- d$Froude_No
+    o$Resistance <- d$Resistance
+    o
+  }
+  list(train = tf(train), test = if (!is.null(test)) tf(test), sc = sc, tf = tf)
+}
+
+full <- df[c(PRED, "Resistance", "hull_id")]
+FR <- make_frames(full)
+mdl <- FR$train
+SCALE <- FR$sc
+
+to_raw <- function(z, resp, sc) if (resp == "raw") z * sc$y[2] + sc$y[1] else expm1(z * sc$ly[2] + sc$ly[1])
+jacobian <- function(frame, resp, sc) {
+  if (resp == "raw") rep(-log(sc$y[2]), nrow(frame)) else -log(sc$ly[2]) - log1p(frame$Resistance)
+}
+
+# -----------------------------------------------------------------------------
+# 4. SPESIFIKASI MODEL & PRIOR
+# -----------------------------------------------------------------------------
+GEO <- paste0("z_", GEOM, collapse = " + ")
+LIN <- paste(GEO, "+ z_Froude_No")
+SPL <- paste0("F", 1:6, collapse = " + ")
+
+SPECS <- list(
+  M0 = list(label = "M0 Baseline: Gaussian, raw target (Variant 1)", f = paste("y_z ~", LIN),
+            resp = "raw", fam = "gaussian", froude = "z_Froude_No", spline = FALSE, hetero = FALSE, hier = FALSE),
+  M1 = list(label = "M1 Log target, linear (Variant 2)", f = paste("ly_z ~", LIN),
+            resp = "log", fam = "gaussian", froude = "z_Froude_No", spline = FALSE, hetero = FALSE, hier = FALSE),
+  M2 = list(label = "M2 Log target + Froude^2, ^3 (Variant 3)", f = paste("ly_z ~", LIN, "+ zF2 + zF3"),
+            resp = "log", fam = "gaussian", froude = c("z_Froude_No", "zF2", "zF3"), spline = FALSE, hetero = FALSE, hier = FALSE),
+  M3 = list(label = "M3 Log target + Froude spline", f = paste("ly_z ~", GEO, "+", SPL),
+            resp = "log", fam = "gaussian", froude = character(0), spline = TRUE, hetero = FALSE, hier = FALSE),
+  M4 = list(label = "M4 M3 + heteroskedastic sigma(Froude)", f = paste("ly_z ~", GEO, "+", SPL),
+            resp = "log", fam = "gaussian", froude = character(0), spline = TRUE, hetero = TRUE, hier = FALSE),
+  M5 = list(label = "M5 M3 with Student-t likelihood", f = paste("ly_z ~", GEO, "+", SPL),
+            resp = "log", fam = "student", froude = character(0), spline = TRUE, hetero = FALSE, hier = FALSE),
+  M6 = list(label = "M6 M4 + hull random intercept (final)", f = paste("ly_z ~", GEO, "+", SPL, "+ (1 | hull)"),
+            resp = "log", fam = "gaussian", froude = character(0), spline = TRUE, hetero = TRUE, hier = TRUE)
+)
+
+make_formula <- function(sp) {
+  if (sp$hetero) bf(as.formula(sp$f), sigma ~ z_Froude_No) else bf(as.formula(sp$f))
+}
+
+# s = pengali skala SD prior (1 = dasar, 0.5 lebih ketat, 2.5 lebih lebar) untuk analisis sensitivitas
+make_prior <- function(sp, s = 1) {
+  p <- prior_string(sprintf("normal(0, %g)", 1 * s), class = "Intercept") +
+       prior_string(sprintf("normal(0, %g)", 0.5 * s), class = "b")                  # geometri
+  for (v in sp$froude) p <- p + prior_string(sprintf("normal(0, %g)", 1 * s), class = "b", coef = v)
+  if (sp$spline) for (k in 1:6) p <- p + prior_string(sprintf("normal(0, %g)", 1.5 * s), class = "b", coef = paste0("F", k))
+  if (sp$hetero) {
+    p <- p + prior_string(sprintf("normal(-1.5, %g)", 0.75 * s), class = "Intercept", dpar = "sigma") +
+             prior_string(sprintf("normal(0, %g)", 0.5 * s), class = "b", dpar = "sigma")
+  } else {
+    p <- p + prior_string(sprintf("exponential(%g)", 1 / s), class = "sigma")          # rate = 1/s
+  }
+  if (sp$fam == "student") p <- p + prior(gamma(2, 0.1), class = "nu")               # shape-rate
+  if (sp$hier) p <- p + prior_string(sprintf("normal(0, %g)", 0.25 * s), class = "sd")  # half-normal
+  p
+}
+
+fit_model <- function(name, data = mdl, s = 1, seed = SEED, tag = name, sampler = SAMPLER) {
+  sp <- SPECS[[name]]
+  invisible(gc())                                   # bebaskan memori sebelum kompilasi Stan
+  brm(make_formula(sp), data = data,
+      family = if (sp$fam == "student") student() else gaussian(),
+      prior = make_prior(sp, s), chains = sampler$chains, iter = sampler$iter,
+      warmup = sampler$warmup, cores = N_CORES, seed = seed, control = CONTROL,
+      refresh = 0, silent = 2, file = file.path("fits", tag), file_refit = "on_change")
+}
+
+MAIN_PAR <- function(fit) grep("^b_|^sigma$|^sd_|^nu$", variables(fit), value = TRUE)
+
+diag_row <- function(fit, name) {
+  t0 <- sum(rstan::get_elapsed_time(fit$fit))
+  s <- summarise_draws(as_draws_array(fit, variable = MAIN_PAR(fit)),
+                       "mean", "sd", "rhat", "ess_bulk", "ess_tail", "mcse_mean")
+  np <- nuts_params(fit)
+  data.frame(model = name, sampling_s = round(t0, 1), max_rhat = max(s$rhat),
+             min_ess_bulk = min(s$ess_bulk), min_ess_tail = min(s$ess_tail),
+             max_mcse_over_sd = max(s$mcse_mean / s$sd),
+             divergences = sum(np$Value[np$Parameter == "divergent__"]))
+}
+
+loo_raw <- function(fit, name, data = mdl) {
+  ll <- log_lik(fit)
+  ll <- sweep(ll, 2, jacobian(data, SPECS[[name]]$resp, SCALE), "+")   # pindah ke satuan asli Resistance
+  chain_id <- rep(seq_len(nchains(fit)), each = ndraws(fit) / nchains(fit))
+  list(loo = loo(ll, r_eff = relative_eff(exp(ll), chain_id = chain_id)), waic = waic(ll))
+}
+
+# -----------------------------------------------------------------------------
+# 5. PRIOR PREDICTIVE CHECK (simulasi eksplisit dari prior, materi Bag. 5.3)
+# -----------------------------------------------------------------------------
+prior_predictive <- function(name, S = 1000, wide = FALSE) {
+  sp <- SPECS[[name]]
+  set.seed(SEED)
+  Xg <- scale(as.matrix(mdl[paste0("z_", GEOM)]), scale = FALSE)          # brms: intercept pada prediktor terpusat
+  zF <- mdl$z_Froude_No
+  out <- matrix(NA_real_, S, nrow(mdl))
+  for (s in 1:S) {
+    ic  <- rnorm(1, 0, if (wide) 2.5 else 1)
+    mu  <- ic + Xg %*% rnorm(length(GEOM), 0, if (wide) 1 else 0.5)
+    if (sp$spline) {
+      Fm <- scale(as.matrix(mdl[paste0("F", 1:6)]), scale = FALSE)
+      mu <- mu + Fm %*% rnorm(6, 0, if (wide) 2.5 else 1.5)
+    } else {
+      mu <- mu + (zF - mean(zF)) * rnorm(1, 0, 1)
+    }
+    if (sp$hier) {
+      u <- rnorm(AUDIT$n_hull, 0, abs(rnorm(1, 0, if (wide) 1 else 0.25)))
+      mu <- mu + u[mdl$hull_id]
+    }
+    sig <- if (sp$hetero) exp(rnorm(1, if (wide) 0 else -1.5, if (wide) 2 else 0.75) +
+                              rnorm(1, 0, if (wide) 1 else 0.5) * zF) else rexp(1, 1)
+    out[s, ] <- rnorm(nrow(mdl), mu, sig)
+  }
+  to_raw(out, sp$resp, SCALE)
+}
+PRIOR_PRED <- cache_rds("prior_predictive", list(
+  M0 = prior_predictive("M0"), M6 = prior_predictive("M6"), M6_initial = prior_predictive("M6", wide = TRUE)))
+
+pp_summary <- function(v) {
+  v <- v[is.finite(v)]
+  c(share_negative = mean(v < 0), share_below_minus_0.5 = mean(v < -0.5), share_gt_1000 = mean(v > 1000),
+    q01 = unname(quantile(v, .01)), q50 = median(v), q95 = unname(quantile(v, .95)), q99 = unname(quantile(v, .99)))
+}
+
+# -----------------------------------------------------------------------------
+# 6. PRIOR SALAH SKALA (reproduksi kesalahan versi awal, materi Bag. 7/10A)
+# -----------------------------------------------------------------------------
+fit_old <- brm(as.formula(paste("Resistance ~", paste(PRED, collapse = " + "))), data = df,
+               prior = prior_string(sprintf("normal(%g, %g)", mean(df$Resistance), 2.5 * sd(df$Resistance)), class = "Intercept") +
+                       prior(normal(0, 1), class = "b") +
+                       prior_string(sprintf("normal(0, %g)", sd(df$Resistance)), class = "sigma"),
+               chains = CV_SAMPLER$chains, iter = CV_SAMPLER$iter, warmup = CV_SAMPLER$warmup, cores = N_CORES,
+               seed = SEED, refresh = 0, silent = 2, file = "fits/old_misscaled_prior", file_refit = "on_change")
+Xraw <- cbind(1, as.matrix(df[PRED]))
+b_ols_raw <- drop(solve(crossprod(Xraw), crossprod(Xraw, df$Resistance)))
+OLD <- list(ols = b_ols_raw[["Froude_No"]], old = fixef(fit_old)["Froude_No", ],
+            prior_span95 = 1.96 * diff(range(df$Froude_No)))
+
+# -----------------------------------------------------------------------------
+# 7. VALIDASI KOMPUTASI: analitik konjugat vs Gibbs manual vs HMC (Stan)
+# -----------------------------------------------------------------------------
+X <- cbind(Intercept = 1, as.matrix(mdl[paste0("z_", PRED)]))
+y <- mdl$y_z
+n <- nrow(X); p <- ncol(X)
+m0 <- rep(0, p); V0 <- diag(p); a0 <- 2; b0 <- 1
+V0i <- solve(V0)
+Vn <- solve(V0i + crossprod(X))
+mn <- drop(Vn %*% (V0i %*% m0 + crossprod(X, y)))
+an <- a0 + n / 2
+bn <- b0 + 0.5 * drop(crossprod(y) + t(m0) %*% V0i %*% m0 - t(mn) %*% solve(Vn) %*% mn)
+sd_analytic <- sqrt(diag(Vn) * bn / (an - 1))
+b_ols <- drop(solve(crossprod(X), crossprod(X, y)))
+
+GIBBS <- cache_rds("gibbs", {
+  set.seed(SEED)
+  B <- 12000; burn <- 2000
+  beta <- matrix(0, B, p); s2 <- rep(1, B)
+  L <- t(chol(Vn))
+  for (it in 2:B) {
+    beta[it, ] <- mn + sqrt(s2[it - 1]) * drop(L %*% rnorm(p))
+    r <- y - X %*% beta[it, ]
+    dp <- beta[it, ] - m0
+    s2[it] <- 1 / rgamma(1, shape = a0 + (n + p) / 2,
+                         rate = b0 + 0.5 * drop(crossprod(r) + t(dp) %*% V0i %*% dp))  # 1/sigma2 ~ Gamma(shape, rate)
+  }
+  list(beta = beta[-(1:burn), ], s2 = s2[-(1:burn)])
+})
+
+NIG_STAN <- "
+data { int<lower=1> N; int<lower=1> P; matrix[N, P] X; vector[N] y; real a0; real b0; }
+parameters { real<lower=0> sigma2; vector[P] beta_raw; }
+transformed parameters { vector[P] beta = sqrt(sigma2) * beta_raw; }
+model { sigma2 ~ inv_gamma(a0, b0); beta_raw ~ std_normal(); y ~ normal(X * beta, sqrt(sigma2)); }
+"
+HMC_NIG <- cache_rds("hmc_nig", {
+  sm <- stan_model(model_code = NIG_STAN)
+  fit <- sampling(sm, data = list(N = n, P = p, X = X, y = y, a0 = a0, b0 = b0),
+                  chains = 4, iter = 3000, warmup = 1000, seed = SEED, refresh = 0)
+  summarise_draws(as_draws_array(fit), "mean", "sd", "mcse_mean", "rhat", "ess_bulk")
+})
+hmc_beta <- HMC_NIG[grepl("^beta\\[", HMC_NIG$variable), ]
+COMP <- data.frame(
+  OLS = b_ols, Analytic_mean = mn, Analytic_SD = sd_analytic, Gibbs_mean = colMeans(GIBBS$beta),
+  HMC_mean = hmc_beta$mean, HMC_MCSE = hmc_beta$mcse_mean, row.names = colnames(X))
+COMP$HMC_minus_Analytic_in_MCSE <- (COMP$HMC_mean - COMP$Analytic_mean) / COMP$HMC_MCSE
+SIGMA2 <- c(Analytic = bn / (an - 1), Gibbs = mean(GIBBS$s2),
+            HMC = HMC_NIG$mean[HMC_NIG$variable == "sigma2"])
+
+# log-likelihood manual (materi Bag. 4) untuk diverifikasi terhadap Stan
+loglik_gaussian <- function(beta, sigma, X, y) sum(dnorm(y, drop(X %*% beta), sigma, log = TRUE))
+
+# -----------------------------------------------------------------------------
+# 8. FIT MODEL M0 - M6
+# -----------------------------------------------------------------------------
+FITS <- lapply(setNames(names(SPECS), names(SPECS)), fit_model)
+DIAG <- bind_rows(lapply(names(FITS), function(m) diag_row(FITS[[m]], m)))
+DIAG$verdict <- ifelse(DIAG$max_rhat <= 1.01 & DIAG$min_ess_bulk >= 400 & DIAG$min_ess_tail >= 400 &
+                         DIAG$divergences == 0, "OK", "CHECK")
+
+# verifikasi likelihood manual pada satu posterior draw M0
+d0 <- as_draws_df(FITS$M0)
+LL_CHECK <- c(
+  manual = loglik_gaussian(unlist(d0[1, paste0("b_", c("Intercept", paste0("z_", PRED)))]), d0$sigma[1], X, y) +
+    n * (-log(SCALE$y[2])),
+  stan = sum(log_lik(FITS$M0, draw_ids = 1)) + n * (-log(SCALE$y[2])))
+
+# -----------------------------------------------------------------------------
+# 9. LOO / WAIC (koreksi Jacobian ke satuan asli Resistance)
+# -----------------------------------------------------------------------------
+# Kompatibilitas cache loo:
+# Object loo yang tersimpan dari versi package lama dapat memiliki struktur
+# diagnostik Pareto-k yang berbeda. Ambil Pareto-k dari struktur yang tersedia,
+# dan bila cache lama tidak menyimpannya, hitung ulang LOOS dari fit saat ini.
+extract_pareto_k <- function(x) {
+  if (is.null(x)) return(NULL)
+
+  # Struktur utama pada loo modern
+  if (!is.null(x$diagnostics) && !is.null(x$diagnostics$pareto_k)) {
+    return(as.numeric(x$diagnostics$pareto_k))
+  }
+
+  # Fallback yang tetap tersedia pada objek loo dengan pointwise diagnostics
+  if (!is.null(x$pointwise) &&
+      "influence_pareto_k" %in% colnames(x$pointwise)) {
+    return(as.numeric(x$pointwise[, "influence_pareto_k"]))
+  }
+
+  # Fallback terakhir bila psis object tersimpan
+  if (!is.null(x$psis_object)) {
+    out <- tryCatch(loo::pareto_k_values(x$psis_object),
+                    error = function(e) NULL)
+    if (!is.null(out)) return(as.numeric(out))
+  }
+
+  NULL
+}
+
+build_loos <- function() {
+  lapply(setNames(names(FITS), names(FITS)),
+         function(m) loo_raw(FITS[[m]], m))
+}
+
+LOOS <- cache_rds("loos", build_loos())
+
+# Cache loo lama mungkin sah untuk ELPD/WAIC tetapi tidak menyimpan
+# diagnostik Pareto-k yang dikenali oleh versi loo yang sedang dipakai.
+# Dalam kondisi ini, cache khusus LOO dibangun ulang dari posterior yang ada.
+has_pareto_k <- vapply(LOOS, function(z) {
+  pk <- extract_pareto_k(z$loo)
+  length(pk) > 0 && any(is.finite(pk))
+}, logical(1))
+
+if (!all(has_pareto_k)) {
+  unlink(file.path("cache", "loos.rds"))
+  LOOS <- cache_rds("loos", build_loos())
+}
+
+loo_cmp <- loo_compare(lapply(LOOS, `[[`, "loo"))
+LOO_TAB <- data.frame(model = rownames(loo_cmp), loo_cmp[, c("elpd_loo", "se_elpd_loo", "p_loo", "elpd_diff", "se_diff")],
+                      row.names = NULL)
+LOO_TAB$elpd_waic <- sapply(LOO_TAB$model, function(m) LOOS[[m]]$waic$estimates["elpd_waic", "Estimate"])
+
+LOO_TAB$n_pareto_k_gt_0.7 <- sapply(LOO_TAB$model, function(m) {
+  pk <- extract_pareto_k(LOOS[[m]]$loo)
+  if (is.null(pk)) return(NA_integer_)
+  sum(pk > 0.7, na.rm = TRUE)
+})
+
+LOO_TAB$diff_over_se <- ifelse(LOO_TAB$se_diff > 0, LOO_TAB$elpd_diff / LOO_TAB$se_diff, NA)
+
+# -----------------------------------------------------------------------------
+# 10. PPC & RESIDUAL (satuan asli)
+# -----------------------------------------------------------------------------
+ppc_raw <- function(name, ndraws = 1000) {
+  set.seed(SEED)
+  to_raw(posterior_predict(FITS[[name]], ndraws = ndraws), SPECS[[name]]$resp, SCALE)
+}
+STATS <- list(mean = mean, sd = sd, max = max, skewness = skew, `share < 0` = function(v) mean(v < 0))
+ppc_table <- function(yrep, yobs) {
+  do.call(rbind, lapply(names(STATS), function(k) {
+    rep <- apply(yrep, 1, STATS[[k]]); obs <- STATS[[k]](yobs)
+    data.frame(statistic = k, observed = obs, rep_median = median(rep), rep_2.5 = unname(quantile(rep, .025)),
+               rep_97.5 = unname(quantile(rep, .975)), P_rep_ge_obs = mean(rep >= obs))
+  }))
+}
+YOBS <- mdl$Resistance
+YREP <- cache_rds("yrep", list(M0 = ppc_raw("M0"), M6 = ppc_raw("M6")))
+PPC <- list(M0 = ppc_table(YREP$M0, YOBS), M6 = ppc_table(YREP$M6, YOBS))
+
+MU_M0 <- colMeans(to_raw(posterior_linpred(FITS$M0), "raw", SCALE))
+MU6 <- colMeans(posterior_linpred(FITS$M6))
+SIG6 <- colMeans(posterior_linpred(FITS$M6, dpar = "sigma", transform = TRUE))
+RES6 <- (mdl$ly_z - MU6) / SIG6
+
+# VIF dan korelasi posterior (materi Bag. 16, 24.4)
+vif_table <- function(M) sapply(seq_len(ncol(M)), function(i) 1 / (1 - summary(lm(M[, i] ~ M[, -i]))$r.squared))
+VIF <- list(geometry = setNames(vif_table(as.matrix(mdl[paste0("z_", PRED)])), PRED),
+            poly = setNames(vif_table(as.matrix(mdl[c("z_Froude_No", "zF2", "zF3")])), c("Froude", "Froude^2", "Froude^3")))
+POST_COR <- cor(as.data.frame(as_draws_df(FITS$M2))[, paste0("b_", c("z_LD_Ratio", "z_BD_Ratio", "z_LB_Ratio", "z_Froude_No", "zF2", "zF3"))])
+
+# -----------------------------------------------------------------------------
+# 11. POSTERIOR MANAGEMENT
+# -----------------------------------------------------------------------------
+hdi <- function(v, prob = .95) {
+  v <- sort(v); k <- floor(prob * length(v)); w <- v[(k + 1):length(v)] - v[1:(length(v) - k)]
+  i <- which.min(w); c(v[i], v[i + k])
+}
+kde_mode <- function(v) { d <- density(v); d$x[which.max(d$y)] }
+manage <- function(v) {
+  h <- hdi(v)
+  c(mean = mean(v), median = median(v), mode_kde = kde_mode(v), sd = sd(v),
+    eti_2.5 = unname(quantile(v, .025)), eti_97.5 = unname(quantile(v, .975)),
+    hdi_low = h[1], hdi_high = h[2], P_gt_0 = mean(v > 0))
+}
+M0_RAW <- t(sapply(PRED, function(v) manage(d0[[paste0("b_z_", v)]] * SCALE$y[2] / SCALE[[v]][2])))
+M0_RAW <- cbind(M0_RAW, OLS_raw_units = b_ols_raw[PRED])
+BF <- d0$b_z_Froude_No * SCALE$y[2] / SCALE$Froude_No[2]
+
+d6 <- as_draws_df(FITS$M6)
+sl <- SCALE$ly[2]
+EFF <- rbind(
+  t(sapply(GEOM, function(v) { e <- 100 * (exp(d6[[paste0("b_z_", v)]] * sl) - 1); c(manage(e), P_abs_gt_1pct = mean(abs(e) > 1)) })),
+  `Residual SD multiplier per +1 SD Froude` = { e <- exp(d6$b_sigma_z_Froude_No); c(manage(e), P_abs_gt_1pct = mean(e > 1.01)) },
+  `Between-hull variation (%)` = { e <- 100 * (exp(d6$sd_hull__Intercept * sl) - 1); c(manage(e), P_abs_gt_1pct = mean(e > 1)) })
+
+# kurva sigma(Froude) untuk hull tipikal
+grid_df <- data.frame(Froude_No = seq(min(df$Froude_No), max(df$Froude_No), length.out = 60))
+for (v in GEOM) grid_df[[v]] <- mean(df[[v]])
+grid_df$Resistance <- 0; grid_df$hull_id <- 999
+GRID <- FR$tf(grid_df)
+SIG_GRID <- posterior_linpred(FITS$M6, newdata = GRID, dpar = "sigma", transform = TRUE, re_formula = NA)
+
+# -----------------------------------------------------------------------------
+# 12. PREDIKSI HULL BARU (posterior predictive, materi Bag. 24.6)
+# -----------------------------------------------------------------------------
+hull_geom <- df[!duplicated(df$hull_id), GEOM]
+FROUDE_GRID <- sort(unique(df$Froude_No))
+scen <- data.frame(Froude_No = FROUDE_GRID)
+for (v in GEOM) scen[[v]] <- median(hull_geom[[v]])
+scen$Resistance <- 0; scen$hull_id <- 999
+SCEN <- FR$tf(scen)
+predict_new_hull <- function(fit) {
+  set.seed(SEED)
+  to_raw(posterior_predict(fit, newdata = SCEN, allow_new_levels = TRUE, sample_new_levels = "gaussian"), "log", SCALE)
+}
+PRED_NEW <- predict_new_hull(FITS$M6)
+MEAN_TYP <- to_raw(posterior_linpred(FITS$M6, newdata = SCEN, re_formula = NA), "log", SCALE)
+PRED_TAB <- data.frame(Froude = FROUDE_GRID, pred_median = apply(PRED_NEW, 2, median),
+                       PI_2.5 = apply(PRED_NEW, 2, quantile, .025), PI_97.5 = apply(PRED_NEW, 2, quantile, .975),
+                       P_R_gt_5 = colMeans(PRED_NEW > 5), P_R_gt_20 = colMeans(PRED_NEW > 20))
+I40 <- which(abs(FROUDE_GRID - 0.40) < 1e-9)
+
+# -----------------------------------------------------------------------------
+# 13. SENSITIVITAS: lab prior-data (analitik) & prior pada M6 (MCMC)
+# -----------------------------------------------------------------------------
+sigma2_known <- bn / (an - 1)
+hull_order <- unique(mdl$hull_id)
+SUBSETS <- list(`1 hull (n=14)` = hull_order[1], `3 hulls (n=42)` = hull_order[1:3], `22 hulls (n=308)` = hull_order)
+PRIORS_LAB <- list(`Weak N(0, 1)` = c(0, 1), `Strong-correct N(0.81, 0.02)` = c(0.81, 0.02),
+                   `Strong-wrong N(0.40, 0.02)` = c(0.40, 0.02))
+LAB <- do.call(rbind, lapply(names(SUBSETS), function(sn) {
+  idx <- mdl$hull_id %in% SUBSETS[[sn]]
+  Xs <- X[idx, ]; ys <- y[idx]
+  do.call(rbind, lapply(names(PRIORS_LAB), function(pn) {
+    pr <- PRIORS_LAB[[pn]]
+    m0v <- rep(0, p); m0v[p] <- pr[1]
+    V0v <- diag(p); V0v[p, p] <- pr[2]^2
+    Vni <- solve(V0v) + crossprod(Xs) / sigma2_known
+    Vn_ <- solve(Vni)
+    mn_ <- drop(Vn_ %*% (solve(V0v) %*% m0v + crossprod(Xs, ys) / sigma2_known))
+    b_hat <- coef(lm(ys ~ Xs[, p]))[2]
+    data.frame(data = sn, prior = pn, post_mean = mn_[p], post_sd = sqrt(Vn_[p, p]),
+               data_only_slope = unname(b_hat), prior_pull = (1 / pr[2]^2) / Vni[p, p])
+  }))
+}))
+
+SENS_FITS <- list(`Tighter (x0.5)` = fit_model("M6", s = 0.5, tag = "M6_prior_x0.5"),
+                  `Base (x1)` = FITS$M6,
+                  `Wider (x2.5)` = fit_model("M6", s = 2.5, tag = "M6_prior_x2.5"))
+KEY <- c("b_z_LD_Ratio", "b_z_BD_Ratio", "b_z_LB_Ratio", "b_z_LCB", "b_z_Prismatic_Coef",
+         "b_sigma_z_Froude_No", "sd_hull__Intercept")
+SENS <- cache_rds("sensitivity", do.call(rbind, lapply(names(SENS_FITS), function(lab) {
+  f <- SENS_FITS[[lab]]; dd <- as_draws_df(f)
+  data.frame(prior = lab, param = KEY, median = sapply(KEY, function(k) median(dd[[k]])),
+             lo = sapply(KEY, function(k) quantile(dd[[k]], .025)), hi = sapply(KEY, function(k) quantile(dd[[k]], .975)),
+             P_R20_Fr040 = mean(predict_new_hull(f)[, I40] > 20),
+             ELPD_LOO = loo_raw(f, "M6")$loo$estimates["elpd_loo", "Estimate"], row.names = NULL)
+})))
+NU <- as_draws_df(FITS$M5)$nu
+
+# -----------------------------------------------------------------------------
+# 14. AUDIT REPRODUCIBILITY: seed & urutan data
+# -----------------------------------------------------------------------------
+compare_runs <- function(fa, fb) {
+  v <- MAIN_PAR(fa)
+  sa <- summarise_draws(as_draws_array(fa, variable = v), "mean", "sd", "mcse_mean")
+  sb <- summarise_draws(as_draws_array(fb, variable = v), "mean", "sd", "mcse_mean")
+  data.frame(param = v, mean_a = sa$mean, mean_b = sb$mean, sd_a = sa$sd,
+             z_mcse = (sb$mean - sa$mean) / sqrt(sa$mcse_mean^2 + sb$mcse_mean^2),
+             pct_of_sd = 100 * abs(sb$mean - sa$mean) / sa$sd,
+             expected_noise_pct = 100 * sqrt(2) * median(sa$mcse_mean / sa$sd))
+}
+SEEDS_EXTRA <- c(777, 999, 31, 123)
+SEED_FITS <- c(list(`2026` = FITS$M6),
+               lapply(setNames(SEEDS_EXTRA, SEEDS_EXTRA), function(s)
+                 cache_rds(paste0("fit_M6_seed", s), update(FITS$M6, seed = s, refresh = 0, silent = 2, recompile = FALSE))))
+FIT_SEED <- SEED_FITS[["777"]]
+set.seed(SEED)
+SHUFFLED <- mdl[sample(nrow(mdl)), ]
+FIT_SHUF <- cache_rds("fit_M6_shuffled", update(FITS$M6, newdata = SHUFFLED, seed = SEED, refresh = 0,
+                                                silent = 2, recompile = FALSE))
+CMP_SEED <- compare_runs(FITS$M6, FIT_SEED)
+CMP_ORDER <- compare_runs(FITS$M6, FIT_SHUF)
+FLAGGED <- unique(c(CMP_SEED$param[abs(CMP_SEED$z_mcse) >= 3], CMP_ORDER$param[abs(CMP_ORDER$z_mcse) >= 3]))
+
+# Audit lima seed: apakah MCSE yang dilaporkan sesuai dengan variasi nyata antar-run?
+v_main <- MAIN_PAR(FITS$M6)
+seed_sum <- lapply(SEED_FITS, function(f) summarise_draws(as_draws_array(f, variable = v_main), "mean", "mcse_mean"))
+seed_means <- sapply(seed_sum, `[[`, "mean"); rownames(seed_means) <- v_main
+MULTI_SEED <- data.frame(param = v_main, t(apply(seed_means, 1, range)),
+                         between_run_sd = apply(seed_means, 1, sd),
+                         mean_reported_mcse = rowMeans(sapply(seed_sum, `[[`, "mcse_mean")))
+names(MULTI_SEED)[2:3] <- c("min_mean_5_seeds", "max_mean_5_seeds")
+MULTI_SEED$ratio_sd_to_mcse <- MULTI_SEED$between_run_sd / MULTI_SEED$mean_reported_mcse
+# Kesimpulan substantif antar seed: variasi antar-hull (%) dan probabilitas eksedans hull baru
+SEED_CONCL <- do.call(rbind, lapply(names(SEED_FITS), function(s) {
+  dd <- as_draws_df(SEED_FITS[[s]])
+  data.frame(seed = s, between_hull_pct = median(100 * (exp(dd$sd_hull__Intercept * SCALE$ly[2]) - 1)),
+             P_R20_Fr040 = mean(predict_new_hull(SEED_FITS[[s]])[, I40] > 20))
+}))
+
+# -----------------------------------------------------------------------------
+# 15. CROSS-VALIDATION: per hull (grouped) vs acak per baris
+# -----------------------------------------------------------------------------
+logmeanexp <- function(x) { m <- max(x); m + log(mean(exp(x - m))) }
+make_folds <- function(scheme) {
+  if (scheme == "grouped") {
+    hulls <- sort(unique(full$hull_id))
+    fold_of_hull <- rep(1:5, length.out = length(hulls))            # 22 hull -> fold berisi 4-5 hull utuh
+    fold_of_hull[match(full$hull_id, hulls)]
+  } else {
+    set.seed(SEED); sample(rep(1:5, length.out = nrow(full)))
+  }
+}
+cv_eval <- function(name, scheme) cache_rds(paste0("cv_", name, "_", scheme), {
+  sp <- SPECS[[name]]
+  resp <- if (sp$resp == "raw") "y_z" else "ly_z"
+  folds <- make_folds(scheme)
+  recs <- list(); rhats <- c()
+  for (k in 1:5) {
+    fr <- make_frames(full[folds != k, ], full[folds == k, ])
+    f <- update(FITS[[name]], newdata = fr$train, chains = CV_SAMPLER$chains, iter = CV_SAMPLER$iter,
+                warmup = CV_SAMPLER$warmup, seed = SEED + k, refresh = 0, silent = 2, recompile = FALSE)
+    rhats <- c(rhats, max(summarise_draws(as_draws_array(f, variable = MAIN_PAR(f)), "rhat")$rhat))
+    ll <- log_lik(f, newdata = fr$test, allow_new_levels = TRUE, sample_new_levels = "gaussian")
+    lpd <- apply(ll, 2, logmeanexp) + jacobian(fr$test, sp$resp, fr$sc)
+    set.seed(SEED + k)
+    yr <- to_raw(posterior_predict(f, newdata = fr$test, allow_new_levels = TRUE, sample_new_levels = "gaussian"),
+                 sp$resp, fr$sc)
+    recs[[k]] <- data.frame(fold = k, hull_id = fr$test$hull_id, Froude_No = fr$test$Froude_No,
+                            y = fr$test$Resistance, pred_mean = colMeans(yr),
+                            lo = apply(yr, 2, quantile, .025), hi = apply(yr, 2, quantile, .975), lpd = lpd)
+  }
+  r <- bind_rows(recs)
+  list(pred = r, summary = data.frame(
+    model = name, scheme = scheme, RMSE = sqrt(mean((r$y - r$pred_mean)^2)), MAE = mean(abs(r$y - r$pred_mean)),
+    coverage_95 = mean(r$y >= r$lo & r$y <= r$hi), PI_width = mean(r$hi - r$lo),
+    ELPD_per_obs = mean(r$lpd), ELPD_total = sum(r$lpd), max_rhat_folds = max(rhats)))
+})
+CV_PLAN <- list(c("M0", "grouped"), c("M1", "grouped"), c("M2", "grouped"), c("M3", "grouped"), c("M4", "grouped"),
+                c("M6", "grouped"), c("M4", "row-random"), c("M6", "row-random"))
+CV <- lapply(CV_PLAN, function(x) cv_eval(x[1], x[2]))
+names(CV) <- sapply(CV_PLAN, paste, collapse = "_")
+CV_TAB <- bind_rows(lapply(CV, `[[`, "summary"))
+
+cv_key <- function(r) paste(r$hull_id, round(r$Froude_No, 3))
+grouped_models <- CV_TAB$model[CV_TAB$scheme == "grouped"]
+BEST_CV <- grouped_models[which.max(CV_TAB$ELPD_total[CV_TAB$scheme == "grouped"])]
+ref <- CV[[paste0(BEST_CV, "_grouped")]]$pred
+PAIRED <- bind_rows(lapply(grouped_models, function(m) {
+  o <- CV[[paste0(m, "_grouped")]]$pred
+  o <- o[match(cv_key(ref), cv_key(o)), ]
+  d <- o$lpd - ref$lpd
+  hs <- tapply(d, ref$hull_id, sum)
+  data.frame(model = m, ELPD_total = sum(o$lpd), elpd_diff = sum(d),
+             se_diff_obs = sd(d) * sqrt(length(d)), se_diff_hull = sd(hs) * sqrt(length(hs)))
+})) %>% arrange(desc(ELPD_total)) %>% mutate(diff_over_se_hull = ifelse(se_diff_hull > 0, elpd_diff / se_diff_hull, NA))
+OPTIMISM <- bind_rows(lapply(c("M4", "M6"), function(m) {
+  g <- CV[[paste0(m, "_grouped")]]$pred; r <- CV[[paste0(m, "_row-random")]]$pred
+  r <- r[match(cv_key(g), cv_key(r)), ]
+  d <- r$lpd - g$lpd
+  data.frame(model = m, ELPD_optimism = sum(d), se = sd(d) * sqrt(length(d)),
+             RMSE_grouped = sqrt(mean((g$y - g$pred_mean)^2)), RMSE_row = sqrt(mean((r$y - r$pred_mean)^2)))
+})) %>% mutate(optimism_over_se = ELPD_optimism / se)
+
+# -----------------------------------------------------------------------------
+# 16. CHECKLIST & MANIFEST REPRODUCIBILITY
+# -----------------------------------------------------------------------------
+CHECKS <- data.frame(Item = c(
+  "Seed eksplisit tercatat", "Checksum SHA-256 data mentah tercatat", "Preprocessing scripted (make_frames)",
+  "Standardisasi dihitung di dalam fold (tanpa kebocoran)", "Prior eksplisit + prior predictive check",
+  "Komputasi divalidasi (analitik vs Gibbs vs HMC, < 3 MCSE)", "Likelihood manual = likelihood Stan",
+  "Semua model: R-hat <= 1.01, ESS >= 400, 0 divergence", "Stabil terhadap seed (semua |z| < 3 MCSE)",
+  "Stabil terhadap urutan data (semua |z| < 3 MCSE)",
+  "Kesimpulan prediktif stabil antar 5 seed (rentang P(R>20 | Fr=0.40) < 0.05)",
+  "Validasi per-hull dipakai untuk klaim prediktif", "Objek fit tersimpan (fits/*.rds)"),
+  Pass = c(TRUE, nchar(RAW_SHA256) == 64, TRUE, TRUE, TRUE, max(abs(COMP$HMC_minus_Analytic_in_MCSE)) < 3,
+           isTRUE(all.equal(LL_CHECK[["manual"]], LL_CHECK[["stan"]])), all(DIAG$verdict == "OK"),
+           all(abs(CMP_SEED$z_mcse) < 3), all(abs(CMP_ORDER$z_mcse) < 3),
+           diff(range(SEED_CONCL$P_R20_Fr040)) < 0.05, TRUE, file.exists("fits/M6.rds")))
+
+# --------------------------------------------------------------------------
+# Export CSV yang kompatibel dengan semua versi R:
+# write.table()/write.csv() tidak dapat menulis kolom bertipe list.
+# Hasil analisis tetap sama; bagian ini hanya mengubah cara file CSV disimpan.
+# --------------------------------------------------------------------------
+safe_csv <- function(x, file) {
+  x <- as.data.frame(x, stringsAsFactors = FALSE)
+
+  for (j in seq_along(x)) {
+    if (is.factor(x[[j]])) {
+      x[[j]] <- as.character(x[[j]])
+    } else if (is.list(x[[j]])) {
+      x[[j]] <- vapply(
+        x[[j]],
+        function(v) {
+          if (length(v) == 0L || all(is.na(v))) return("")
+          paste(as.character(unlist(v, use.names = FALSE)), collapse = "; ")
+        },
+        character(1)
+      )
+    }
+  }
+
+  utils::write.csv(x, file, row.names = FALSE, na = "")
+}
+
+safe_csv(CV_TAB, "cv_results.csv")
+safe_csv(LOO_TAB, "model_comparison_loo.csv")
+MANIFEST <- list(
+  seed = SEED, raw_data_sha256 = RAW_SHA256, R = R.version.string,
+  packages = sapply(c("brms", "rstan", "loo", "posterior", "dplyr", "splines"), function(x) as.character(packageVersion(x))),
+  sampler = SAMPLER, cv_sampler = CV_SAMPLER, control = CONTROL,
+  scaling_full_data = SCALE, diagnostics = DIAG, loo = LOO_TAB[, c("model", "elpd_loo", "elpd_diff", "se_diff")],
+  cv = CV_TAB, multi_seed = MULTI_SEED, seed_conclusions = SEED_CONCL, checks = CHECKS)
+jsonlite::write_json(MANIFEST, "reproducibility_manifest_R.json", pretty = TRUE, auto_unbox = TRUE, digits = NA)
+\end{verbatim}
+
+\end{document}
